@@ -23,6 +23,7 @@ public class UserService {
 	public void updateUser(ApplicationUser user) {
 		TaskMngtDao<ApplicationUser> useDao = new TaskMngtDao<>();
 		useDao.edit(user);
+		// .....
 	}
 
 }
