@@ -6,32 +6,29 @@
 package task.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 /**
  *
  * @author celem
  */
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = "APPLICATION_ROLE")
 
-public class Category implements Serializable {
+public class ApplicationRole implements Serializable {
 
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -43,14 +40,14 @@ public class Category implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    public Category() {
+    public ApplicationRole() {
     }
 
-    public Category(Integer id) {
+    public ApplicationRole(Integer id) {
         this.id = id;
     }
 
-    public Category(Integer id, String name) {
+    public ApplicationRole(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -81,10 +78,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof ApplicationRole)) {
             return false;
         }
-        Category other = (Category) object;
+        ApplicationRole other = (ApplicationRole) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -93,7 +90,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "taskmngt.model.Category[ id=" + id + " ]";
+        return "task.model.ApplicationRole[ id=" + id + " ]";
     }
     
 }
