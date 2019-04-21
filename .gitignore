@@ -28,6 +28,7 @@ release.properties
 '.idea/workspace.xml'
 out/
 .idea_modules/
+'.idea/workspace.xml'
 
 ##########################
 ## Eclipse
