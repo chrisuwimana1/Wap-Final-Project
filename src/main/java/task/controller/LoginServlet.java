@@ -17,7 +17,6 @@ import task.service.LoginService;
 public class LoginServlet extends HttpServlet{
 	
 	static String LOGIN_PAGE_PATH = "/pages/login.jsp";
-	static String LOGIN_QUERY = "SELECT * FROM mydb.APPLICATION_USER WHERE username = '%s' AND password = '%'";
 	static String DASHBOARD_PAGE_PATH = "/pages/dashboard.jsp";
 	
 	@Override

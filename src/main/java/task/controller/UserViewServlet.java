@@ -22,8 +22,10 @@ public class UserViewServlet extends HttpServlet {
 		
 		List<ApplicationUser> users = UserService.getAll();
 		
-		req.setAttribute("users", users);
+		String currentURL = req.getContextPath() + "/users?id=";
 		
+		req.setAttribute("users", users);
+		req.setAttribute("url", currentURL);
 		req.getRequestDispatcher(VIEWUSER_PAGE_PATH).forward(req, resp);
 	}
 	
