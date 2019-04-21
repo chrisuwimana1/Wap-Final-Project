@@ -25,6 +25,7 @@ release.properties
 .idea/
 *.ipr
 *.iws
+'.idea/workspace.xml'
 out/
 .idea_modules/
 
