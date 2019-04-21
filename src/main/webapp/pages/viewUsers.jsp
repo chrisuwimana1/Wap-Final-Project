@@ -21,6 +21,7 @@
 			<th>Last Name</th>
 			<th>Phone</th>
 			<th>Email</th>
+			<th>View</th>
 		</tr>
 
 		<c:forEach items="${users }" var="user">
@@ -29,6 +30,9 @@
 				<td>${user.lastname }</td>
 				<td>${user.phone }</td>
 				<td>${user.email }</td>
+				<td>
+				<a href="<c:url value="${url }" />">View</a>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>
