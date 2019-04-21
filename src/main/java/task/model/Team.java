@@ -6,18 +6,14 @@
 package task.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,11 +23,14 @@ import javax.validation.constraints.Size;
  * @author celem
  */
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = "TEAM")
 
-public class Category implements Serializable {
 
-        private static final long serialVersionUID = 1L;
+public class Team implements Serializable {
+
+    
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -42,15 +41,18 @@ public class Category implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "NAME")
     private String name;
+    @Size(max = 45)
+    @Column(name = "DESCRIPTION")
+    private String description;
 
-    public Category() {
+    public Team() {
     }
 
-    public Category(Integer id) {
+    public Team(Integer id) {
         this.id = id;
     }
 
-    public Category(Integer id, String name) {
+    public Team(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -71,6 +73,14 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -81,10 +91,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof Team)) {
             return false;
         }
-        Category other = (Category) object;
+        Team other = (Team) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -93,7 +103,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "taskmngt.model.Category[ id=" + id + " ]";
+        return "taskmngt.model.Team[ id=" + id + " ]";
     }
     
 }
