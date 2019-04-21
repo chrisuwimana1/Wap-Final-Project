@@ -15,8 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,8 +30,7 @@ public class ApplicationUser implements Serializable {
 
     @JoinColumn(name = "TEAM_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Team teamId;
-    
+    private Team teamId;    
 
     private static final long serialVersionUID = 1L;
     @Id
