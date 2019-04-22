@@ -33,21 +33,20 @@
     </thead>
     <tfoot>
     <tr>
-        <th>Id</th>
-        <th>Status</th>
-        <th>Category</th>
-        <th>Owner</th>
-        <th>Project Manager</th>
-        <th>Priority</th>
-        <th>Task name</th>
-        <th>Due Date</th>
-    </tr>
+    <th>Id</th>
+    <th>Status</th>
+    <th>Category</th>
+    <th>Owner</th>
+    <th>Project Manager</th>
+    <th>Priority</th>
+    <th>Task name</th>
+    <th>Due Date</th>
+</tr>
     </tfoot>
 </table>
 
 <style type="text/css">
     /* The Modal (background) */
-
 
     .modal {
         display: none; /* Hidden by default */

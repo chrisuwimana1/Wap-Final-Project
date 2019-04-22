@@ -173,7 +173,19 @@ public class Task implements Serializable {
 
     @Override
     public String toString() {
-        return "taskmngt.model.Task[ id=" + id + " ]";
+        return "Task{" +
+                "status=" + status +
+                ", categoryId=" + categoryId +
+                ", taskOwnerId=" + taskOwnerId +
+                ", projectManagerId=" + projectManagerId +
+                ", id=" + id +
+                ", priority=" + priority +
+                ", name='" + name + '\'' +
+                ", dueDate=" + dueDate +
+                ", description='" + description + '\'' +
+                ", creationDate=" + creationDate +
+                ", completionDate=" + completionDate +
+                '}';
     }
 
     public Category getCategoryId() {
