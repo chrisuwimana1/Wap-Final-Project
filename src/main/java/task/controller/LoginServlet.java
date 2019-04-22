@@ -18,7 +18,6 @@ import task.service.LoginService;
 public class LoginServlet extends HttpServlet {
 
     static String LOGIN_PAGE_PATH = "/pages/login.jsp";
-    static String DASHBOARD_PAGE_PATH = "/pages/dashboard.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

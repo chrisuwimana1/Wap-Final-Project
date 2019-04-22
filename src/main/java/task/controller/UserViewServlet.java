@@ -15,7 +15,7 @@ import task.service.UserService;
 @WebServlet("/users")
 public class UserViewServlet extends HttpServlet {
 	
-	static String VIEWUSER_PAGE_PATH = "/pages/viewUsers.jsp";
+	static String VIEWUSER_PAGE_PATH = "/pages/Users.jsp";
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
