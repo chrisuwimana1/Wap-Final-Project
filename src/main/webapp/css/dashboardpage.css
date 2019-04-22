@@ -1,0 +1,43 @@
+
+.sidebarItem{
+    font-size: 18px;
+    font-weight: bold;
+}
+.sidebarsubItem{
+ display:none;
+ font-size: 14px;
+ font-weight: 150;
+ color:orange;
+}
+
+.sidebarsubItem.active{
+    display: block;
+}
+
+
+.sidebarsubItem ul li{
+    height:40px;
+    color:white;
+    cursor: pointer;
+}
+
+.sidebarsubItem ul li:hover{
+    color:chocolate;
+    font-weight: bold;
+    opacity: 0.6;
+}
+
+.sidebarsubItem ul li.active{
+    color:chocolate;
+    font-weight: bold;
+    
+}
+
+.mybodybox{
+    display: none;
+    text-align: center;
+}
+
+.mybodybox.active{
+    display:block;
+}
