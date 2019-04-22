@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import task.model.ApplicationRole;
+import task.model.UserRole;
 import task.model.ApplicationUser;
 import task.service.LoginService;
 
@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 
             String baseURL = req.getContextPath();
 
-            List<ApplicationRole> currentUserRoles = currentUser.getApplicationRoleList();
+            List<UserRole> currentUserRoles = currentUser.getUserRoleList();
 
             currentUserRoles.forEach( x-> System.out.println(x.toString()));
 
