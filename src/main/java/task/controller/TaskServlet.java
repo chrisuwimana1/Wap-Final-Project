@@ -44,6 +44,8 @@ public class TaskServlet extends HttpServlet {
         
         
         
+        
+        
         System.out.println("allTasks = " + allTasks);
         String json = new Gson().toJson(list);
         try (PrintWriter out = response.getWriter()) {

@@ -15,6 +15,8 @@
     <%--         Javascript are at the bottom--%>
 </head>
 <body>
+    
+    <%@ include file="" %>
 <table id="datatable" class="display">
     <thead>
     <tr>

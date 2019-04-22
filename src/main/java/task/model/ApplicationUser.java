@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,8 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 public class ApplicationUser implements Serializable {
 
-    @ManyToMany(mappedBy = "applicationUserList", fetch = FetchType.LAZY)
-    private List<ApplicationRole> applicationRoleList;
+    @OneToMany(mappedBy = "applicationUserId", fetch = FetchType.EAGER)
+    private List<UserRole> userRoleList;
+
+   
 
     @JoinColumn(name = "TEAM_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -191,12 +194,13 @@ public class ApplicationUser implements Serializable {
     }
 
     @XmlTransient
-    public List<ApplicationRole> getApplicationRoleList() {
-        return applicationRoleList;
+    public List<UserRole> getUserRoleList() {
+        return userRoleList;
     }
 
-    public void setApplicationRoleList(List<ApplicationRole> applicationRoleList) {
-        this.applicationRoleList = applicationRoleList;
+    public void setUserRoleList(List<UserRole> userRoleList) {
+        this.userRoleList = userRoleList;
     }
+
 
 }
