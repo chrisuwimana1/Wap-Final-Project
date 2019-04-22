@@ -41,6 +41,8 @@ public class TaskServlet extends HttpServlet {
         
         List<Task> list = new TaskMngtDao<Task>().executeNativeQuery("select * from TASK",Task.class);
         
+       
+        
         
         for (Task task : list) {
             task.getProjectManagerId().getUserRoleList().clear();
