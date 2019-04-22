@@ -37,11 +37,18 @@ public class TaskServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
         List<Task> allTasks = TaskService.getAllTasks();
         
         List<Task> list = new TaskMngtDao<Task>().executeNativeQuery("select * from TASK",Task.class);
-        
+
+        list.forEach(task -> {
+            task.getProjectManagerId().getApplicationRoleList().clear();
+        });
+
+        list.forEach(task -> {
+            task.getTaskOwnerId().getApplicationRoleList().clear();
+        });
+
         System.out.println("allTasks = " + allTasks);
         String json = new Gson().toJson(list);
         try (PrintWriter out = response.getWriter()) {

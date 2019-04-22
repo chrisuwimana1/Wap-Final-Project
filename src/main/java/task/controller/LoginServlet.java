@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
             String baseURL = req.getContextPath();
 
-            req.getRequestDispatcher("/dashboard").forward(req,resp);
+            req.getRequestDispatcher("/index.jsp").forward(req,resp);
             // System.out.print(currentUser.toString());
         } else {
             doGet(req, resp);
