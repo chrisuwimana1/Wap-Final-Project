@@ -14,8 +14,8 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    List of registred users
-                    <small>advanced tables</small>
+                    List of registered users
+                    <small>| task management</small>
                 </h1>
             </section>
 
@@ -24,9 +24,6 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box">
-                            <div class="box-header">
-                                <h3 class="box-title">Hover Data Table</h3>
-                            </div>
                             <!-- /.box-header -->
                             <div class="box-body">
                                 <table class="table table-bordered table-hover">
