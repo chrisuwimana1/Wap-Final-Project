@@ -101,7 +101,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return "task.model.Team[ id=" + id + " ]";
+        return "task.model.Team[ id=" + id + " ] [name = "+name+"]";
     }
 
 }
