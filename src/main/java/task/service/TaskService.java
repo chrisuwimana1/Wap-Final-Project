@@ -23,6 +23,7 @@ public class TaskService {
         task.setProjectManagerId(new ApplicationUser(managerId));
         task.setTaskOwnerId(new ApplicationUser(ownerId));
         task.setCategoryId(new Category(categoryId));
+        task.setDescription(description);
         new TaskMngtDao<>().create(task);
     }
 
