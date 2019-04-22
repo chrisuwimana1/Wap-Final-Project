@@ -60,7 +60,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="w3_info">
 					<h2>Login to your Account</h2>
 					<p>Enter your details to login.</p>
-					<form action="#" method="post">
+					<form action="dashboard" method="post">
 						<label>Email Address</label>
 						<div class="input-group">
 							<span class="fa fa-envelope" aria-hidden="true"></span> <input

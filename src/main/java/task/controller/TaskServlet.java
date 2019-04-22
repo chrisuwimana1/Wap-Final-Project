@@ -37,7 +37,6 @@ public class TaskServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
         List<Task> allTasks = TaskService.getAllTasks();
         
         List<Task> list = new TaskMngtDao<Task>().executeNativeQuery("select * from TASK",Task.class);

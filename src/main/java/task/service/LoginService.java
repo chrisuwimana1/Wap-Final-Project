@@ -5,6 +5,7 @@ import java.util.List;
 import task.dao.TaskMngtDao;
 import task.model.ApplicationUser;
 
+
 public class LoginService {
 
 	
@@ -13,7 +14,8 @@ public class LoginService {
 		String loginQuery = "SELECT * FROM mydb.APPLICATION_USER " + "WHERE username = '" + username
 				+ "' AND password = '" + password + "'";
 
-		List<ApplicationUser> user = new TaskMngtDao<ApplicationUser>().executeNativeQuery(loginQuery,ApplicationUser.class);
+		List<ApplicationUser> user = new TaskMngtDao<ApplicationUser>()
+				.executeNativeQuery(loginQuery,ApplicationUser.class);
 
                 
 		return user.get(0);
@@ -21,7 +23,6 @@ public class LoginService {
 	
 	// logout which take user id and return void 
 	public static void logout(int id) {
-		
-		// TODO later
+		//TODO
 	}
 }
