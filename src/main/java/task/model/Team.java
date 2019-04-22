@@ -6,15 +6,9 @@
 package task.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -34,7 +28,7 @@ public class Team implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID")
+    @Column(name ="ID")
     private Integer id;
     @Basic(optional = false)
     @NotNull
@@ -45,16 +39,24 @@ public class Team implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Transient
+    private List<ApplicationUser> teamMembers;
+
     public Team() {
+        this.teamMembers = new ArrayList<>();
     }
 
     public Team(Integer id) {
+
         this.id = id;
+        this.teamMembers = new ArrayList<>();
+
     }
 
     public Team(Integer id, String name) {
         this.id = id;
         this.name = name;
+        this.teamMembers = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -79,6 +81,22 @@ public class Team implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<ApplicationUser> getTeamMembers() {
+        return teamMembers;
+    }
+
+    public void setTeamMembers(List<ApplicationUser> teamMembers) {
+        this.teamMembers = teamMembers;
+    }
+
+    public void addMember(ApplicationUser member){
+        teamMembers.add(member);
+    }
+
+    public void removeMember(ApplicationUser member){
+        teamMembers.remove(member);
     }
 
     @Override
