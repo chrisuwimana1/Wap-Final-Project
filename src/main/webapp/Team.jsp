@@ -6,9 +6,30 @@
   To change this template use File | Settings | File Templates.
 --%>
 
+
 <div style="width: 100%;height: 200vh;background: lightgreen;color:white">
-    <c:forEach items="${teamMembers}" var="member">
-        <div><c:out value="${member.name}"> </c:out> </div>
-    </c:forEach>
+
+    <table>
+        <caption>Team List</caption>
+        <thead>
+        <tr>
+            <th>Team Id</th>
+            <th>Team Name</th>
+            <th>Team Description</th>
+        </tr>
+        </thead>
+        <tbody id="TeamListTableBody">
+
+        </tbody>
+
+
+    </table>
 
 </div>
+
+<!-- jQuery 3 -->
+<script src="js/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+
+
+<script src="js/team.js"></script>
