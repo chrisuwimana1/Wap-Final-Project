@@ -34,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="css/skin-blue.min.css">
   <link rel="stylesheet" href="css/dashboardpage.css">
-
+  <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -350,18 +350,19 @@ desired effect
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-
 <!-- jQuery 3 -->
 <script src="js/jquery.min.js"></script>
+
+<script src="js/scripts/jquery.dataTables.min.js" type="text/javascript"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="js/adminlte.min.js"></script>
-
 <!-- Page's css -->
 <script src="js/dashboardpage.js"></script>
 <script src="js/users.js"></script>
-
+<script src="js/task/add-task.js" type="text/javascript"></script>
+<script src="js/task/task-list.js" type="text/javascript"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
