@@ -12,7 +12,7 @@ import task.dao.TaskMngtDao;
 import task.model.ApplicationUser;
 import task.service.LoginService;
 
-@WebServlet("/login")
+@WebServlet("/dashboard")
 public class LoginServlet extends HttpServlet {
 
     static String LOGIN_PAGE_PATH = "/pages/login.jsp";
@@ -35,13 +35,15 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("uname");
         String password = req.getParameter("psw");
 
+
+        System.out.println(username + "............" );
         ApplicationUser currentUser = LoginService.login(username, password);
 
         if (currentUser != null) {
 
             String baseURL = req.getContextPath();
 
-            resp.sendRedirect(baseURL);
+            req.getRequestDispatcher("/dashboard").forward(req,resp);
             // System.out.print(currentUser.toString());
         } else {
             doGet(req, resp);

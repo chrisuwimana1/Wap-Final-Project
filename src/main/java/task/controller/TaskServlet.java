@@ -42,8 +42,6 @@ public class TaskServlet extends HttpServlet {
         
         List<Task> list = new TaskMngtDao<Task>().executeNativeQuery("select * from TASK",Task.class);
         
-        
-        
         System.out.println("allTasks = " + allTasks);
         String json = new Gson().toJson(list);
         try (PrintWriter out = response.getWriter()) {
