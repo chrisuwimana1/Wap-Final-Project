@@ -5,10 +5,12 @@
  */
 package task.dao;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -100,7 +102,7 @@ public class TaskMngtDao<T> {
     public List<T> executeNativeQuery(String query, Class<T> entityClass) {
 
         try {
-            return em.createNativeQuery(query,entityClass).getResultList();
+            return em.createNativeQuery(query, entityClass).getResultList();
         } finally {
             em.close();
         }
@@ -112,6 +114,34 @@ public class TaskMngtDao<T> {
             return em.createQuery(query);
         } finally {
             em.close();
+        }
+    }
+
+    public List<T> executeNativeQuery(String queryStr, Class<T> entityClass, boolean like, Object[] params) throws Exception {
+        try {
+            
+            Query query = em.createNativeQuery(queryStr, entityClass);
+
+            int i = 1;
+            for (Object param : params) {
+                if (param instanceof Date) {
+                    query.setParameter(i++, (Date) param, TemporalType.DATE);
+                } else if (like) {
+                    query.setParameter(i++, "%" + param + "%");
+                } else {
+                    query.setParameter(i++, param);
+                }
+            }
+
+            List<T> list = query.getResultList();
+
+            list.stream().filter((t) -> (t != null)).forEachOrdered((t) -> {
+                em.refresh(t);
+            });
+
+            return list;
+        } catch (Exception th) {
+            throw th;
         }
     }
 }
