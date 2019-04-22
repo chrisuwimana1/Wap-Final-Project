@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import task.dao.TaskMngtDao;
 import task.model.Task;
 import task.service.TaskService;
 
@@ -38,8 +39,13 @@ public class TaskServlet extends HttpServlet {
 
 
         List<Task> allTasks = TaskService.getAllTasks();
+        
+        List<Task> list = new TaskMngtDao<Task>().executeNativeQuery("select * from TASK",Task.class);
+        
+        
+        
         System.out.println("allTasks = " + allTasks);
-        String json = new Gson().toJson(allTasks);
+        String json = new Gson().toJson(list);
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("application/json");
             out.write(json);

@@ -9,13 +9,13 @@ public class LoginService {
 
 	
 	// login method which return a list of user
-	public static List<Object> login(String username, String password) {
+	public static ApplicationUser login(String username, String password) {
 		String loginQuery = "SELECT * FROM mydb.APPLICATION_USER " + "WHERE username = '" + username
 				+ "' AND password = '" + password + "'";
 
-		List<Object> user = new TaskMngtDao<ApplicationUser>().executeNativeQuery(loginQuery);
+		List<ApplicationUser> user = new TaskMngtDao<ApplicationUser>().executeNativeQuery(loginQuery,ApplicationUser.class);
 
-		return user;
+		return user.get(0);
 	}
 	
 	// logout which take user id and return void 
