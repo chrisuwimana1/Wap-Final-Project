@@ -8,6 +8,7 @@ To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -95,7 +96,7 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Christophe</span>
+              <span class="hidden-xs">${currentUser.firstname}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -103,8 +104,12 @@ desired effect
                 <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Welcome, Christophe
-                  <small>Manager</small>
+                  Welcome, ${currentUser.firstname} ${currentUser.lastname}
+
+                  <c:forEach items="${currentUserRoles}" var="role">
+                    <small><c:out value="${role.name}"> </c:out> </small>
+                  </c:forEach>
+
                 </p>
               </li>
               <!-- Menu Body -->
@@ -153,7 +158,7 @@ desired effect
           <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Christophe</p>
+          <p>${currentUser.firstname}</p>
           <!-- Status -->
           <!-- <a href="#"><i class="fa fa-circle text-success"></i> </a> -->
         </div>
