@@ -7,5 +7,8 @@
 --%>
 
 <div style="width: 100%;height: 200vh;background: lightgreen;color:white">
-    <h1>Hello Team!!</h1>
+    <c:forEach items="${teamMembers}" var="member">
+        <div><c:out value="${member.name}"> </c:out> </div>
+    </c:forEach>
+
 </div>
