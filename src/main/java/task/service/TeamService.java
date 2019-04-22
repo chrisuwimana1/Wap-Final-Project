@@ -41,7 +41,7 @@ public class TeamService {
         if(members!=null) {
 
             List<ApplicationUser> developers = members.stream()
-                    .filter(m -> m.getApplicationRoleList().stream()
+                    .filter(m -> m.getUserRoleList().stream()
                             .anyMatch(r -> r.getId() == UserEnum.DEVELOPER.getUserRole()))
                     .filter(m -> m.getTeamId() == null)
                     .collect(Collectors.toList());
@@ -62,7 +62,7 @@ public class TeamService {
         //check if it is a developer
 
       if(member!=null){
-          if(member.getApplicationRoleList().stream().anyMatch(r->r.getId()==UserEnum.DEVELOPER.getUserRole()) && member.getTeamId()==null){
+          if(member.getUserRoleList().stream().anyMatch(r->r.getId()==UserEnum.DEVELOPER.getUserRole()) && member.getTeamId()==null){
               member.setTeamId(team);
               new TaskMngtDao<ApplicationUser>().edit(member);
               team.getApplicationUserList().add(member);

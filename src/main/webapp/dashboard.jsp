@@ -107,7 +107,7 @@ desired effect
                   Welcome, ${currentUser.firstname} ${currentUser.lastname}
 
                   <c:forEach items="${currentUserRoles}" var="role">
-                    <small><c:out value="${role.name}"> </c:out> </small>
+                    <small><c:out value="${role.name} here |"> </c:out> </small>
                   </c:forEach>
 
                 </p>
