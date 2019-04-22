@@ -122,7 +122,7 @@ public class ApplicationUser implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
+git
     public String getFirstname() {
         return firstname;
     }
