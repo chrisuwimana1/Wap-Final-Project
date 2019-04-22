@@ -2,6 +2,7 @@
     <table id="datatable" class="display">
         <thead>
             <tr>
+                <th>id</th>
                 <th>Task name</th>
                 <th>Category</th>
                 <th>Status</th>
@@ -13,13 +14,13 @@
         </thead>
         <tfoot>
         <tr>
-            <th>Id</th>
-            <th>Status</th>
+            <th>id</th>
+            <th>Task name</th>
             <th>Category</th>
+            <th>Status</th>
             <th>Owner</th>
             <th>Project Manager</th>
             <th>Priority</th>
-            <th>Task name</th>
             <th>Due Date</th>
         </tr>
         </tfoot>
