@@ -41,7 +41,7 @@ public class TaskMngtDao<T> {
     public void edit(T entity) {
 
         try {
-            em.merge(entity);
+            T merge = em.merge(entity);
         } finally {
             em.close();
         }
@@ -97,10 +97,10 @@ public class TaskMngtDao<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
 
-    public List<Object> executeNativeQuery(String query) {
+    public List<T> executeNativeQuery(String query, Class<T> entityClass) {
 
         try {
-            return em.createNativeQuery(query).getResultList();
+            return em.createNativeQuery(query,entityClass).getResultList();
         } finally {
             em.close();
         }

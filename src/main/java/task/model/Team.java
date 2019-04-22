@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -19,16 +20,13 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "TEAM")
 
-
 public class Team implements Serializable {
 
-    
-
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name ="ID")
+    @Column(name = "ID")
+    //@Id
     private Integer id;
     @Basic(optional = false)
     @NotNull
@@ -38,25 +36,14 @@ public class Team implements Serializable {
     @Size(max = 45)
     @Column(name = "DESCRIPTION")
     private String description;
-
-    @Transient
-    private List<ApplicationUser> teamMembers;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamId", fetch = FetchType.LAZY)
+    private List<ApplicationUser> applicationUserList;
 
     public Team() {
-        this.teamMembers = new ArrayList<>();
     }
 
-    public Team(Integer id) {
-
-        this.id = id;
-        this.teamMembers = new ArrayList<>();
-
-    }
-
-    public Team(Integer id, String name) {
-        this.id = id;
+    public Team(String name) {
         this.name = name;
-        this.teamMembers = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -83,20 +70,13 @@ public class Team implements Serializable {
         this.description = description;
     }
 
-    public List<ApplicationUser> getTeamMembers() {
-        return teamMembers;
+    @XmlTransient
+    public List<ApplicationUser> getApplicationUserList() {
+        return applicationUserList;
     }
 
-    public void setTeamMembers(List<ApplicationUser> teamMembers) {
-        this.teamMembers = teamMembers;
-    }
-
-    public void addMember(ApplicationUser member){
-        teamMembers.add(member);
-    }
-
-    public void removeMember(ApplicationUser member){
-        teamMembers.remove(member);
+    public void setApplicationUserList(List<ApplicationUser> applicationUserList) {
+        this.applicationUserList = applicationUserList;
     }
 
     @Override
@@ -121,7 +101,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return "taskmngt.model.Team[ id=" + id + " ]";
+        return "task.model.Team[ id=" + id + " ]";
     }
-    
+
 }
