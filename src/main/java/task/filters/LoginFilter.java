@@ -56,12 +56,10 @@ public class LoginFilter implements Filter {
 			return;
 		}
 
-
 		if(loginedUser == null){
 			// send him to the login page
 			resp.sendRedirect(req.getContextPath());
 		}
-
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
