@@ -17,7 +17,7 @@ import task.service.LoginService;
 @WebServlet("/dashboard")
 public class LoginServlet extends HttpServlet {
 
-    static String LOGIN_PAGE_PATH = "/pages/login.jsp";
+    static String DASHBOARD_PAGE_PATH = "/dashboard.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 
         req.setAttribute("baseURL", baseURL);
 
-        req.getRequestDispatcher(LOGIN_PAGE_PATH).forward(req, resp);
+        req.getRequestDispatcher(DASHBOARD_PAGE_PATH).forward(req, resp);
     }
 
     @Override
