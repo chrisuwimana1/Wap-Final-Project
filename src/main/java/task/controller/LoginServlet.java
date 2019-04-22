@@ -22,9 +22,13 @@ public class LoginServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		List<ApplicationUser> users = new TaskMngtDao<ApplicationUser>().findAll(ApplicationUser.class);
-		
+		// List<ApplicationUser> users = new TaskMngtDao<ApplicationUser>().findAll(ApplicationUser.class);
 		// users.forEach(x -> System.out.println(x.toString()));
+		
+		String baseURL = req.getContextPath();
+		
+		req.setAttribute("baseURL", baseURL);
+		
 		req.getRequestDispatcher(LOGIN_PAGE_PATH).forward(req, resp);
 	}
 	
@@ -43,6 +47,8 @@ public class LoginServlet extends HttpServlet{
 			resp.sendRedirect(baseURL);
 			// System.out.print(currentUser.toString());
 		}else {
+			doGet(req, resp);
+			
 			// System.out.println("User: "+ username +", pwd: "+ password +" is not registred");
 		}
 	}
