@@ -94,7 +94,7 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="user-image" alt="User Image">
+              <img  src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">${currentUser.firstname}</span>
             </a>
@@ -153,7 +153,7 @@ desired effect
     <section class="sidebar">
 
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
+      <div id="profilebtn" class="user-panel">
         <div class="pull-left image">
           <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="img-circle" alt="User Image">
         </div>

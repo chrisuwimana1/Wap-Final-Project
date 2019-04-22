@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("psw");
 
 
-        System.out.println(username + "............" );
+        // System.out.println(username + "............" );
         ApplicationUser currentUser = LoginService.login(username, password);
 
         if (currentUser != null) {
@@ -43,9 +43,9 @@ public class LoginServlet extends HttpServlet {
 
             List<UserRole> currentUserRoles = currentUser.getUserRoleList();
 
-            currentUserRoles.forEach( x-> System.out.println(x.toString()));
+            System.out.println("list ..."+currentUserRoles);
 
-            // System.out.println(" ........." +);
+            currentUserRoles.forEach( x-> System.out.println("role "+ x.toString()));
 
             HttpSession session = req.getSession();
 
