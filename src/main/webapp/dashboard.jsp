@@ -34,6 +34,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="css/skin-blue.min.css">
   <link rel="stylesheet" href="css/dashboardpage.css">
 
+  <!--  Task's page css -->
+  <link rel="stylesheet" href="css/task/task.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -355,6 +358,14 @@ desired effect
 
 <!-- Page's css -->
 <script src="js/dashboardpage.js"></script>
+<script src="js/scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="js/scripts/jquery.dataTables.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="application/javascript" src="js/task/add-task.js"></script>
+
+
+<!-- Task Page's JS -->
+
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

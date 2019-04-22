@@ -35,9 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class ApplicationRole implements Serializable {
 
     @JoinTable(name = "USER_ROLE", joinColumns = {
-        @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "USER_ID", referencedColumnName = "ID")})
-    @ManyToMany(fetch = FetchType.LAZY)
+        @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = { @JoinColumn(name = "USER_ID", referencedColumnName = "ID")})
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<ApplicationUser> applicationUserList;
 
     private static final long serialVersionUID = 1L;
@@ -97,7 +97,11 @@ public class ApplicationRole implements Serializable {
 
     @Override
     public String toString() {
-        return "task.model.ApplicationRole[ id=" + id + " ]";
+        return "ApplicationRole{" +
+                //"applicationUserList=" + applicationUserList +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     @XmlTransient

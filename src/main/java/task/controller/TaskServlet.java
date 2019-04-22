@@ -42,9 +42,22 @@ public class TaskServlet extends HttpServlet {
         
         List<Task> list = new TaskMngtDao<Task>().executeNativeQuery("select * from TASK",Task.class);
         
+        list.forEach(task->{
+            task.getTaskOwnerId().setApplicationRoleList(null);
+            System.out.println(task.getTaskOwnerId().getApplicationRoleList());
+        });
+
+        list.forEach(task->{
+            task.getProjectManagerId().setApplicationRoleList(null);
+            System.out.println(task.getProjectManagerId().getApplicationRoleList());
+        });
+
+        list.forEach(task->{
+            System.out.println(task.getProjectManagerId().getApplicationRoleList());
+        });
         
-        
-        System.out.println("allTasks = " + allTasks);
+        //System.out.println("allTasks = " + allTasks);
+
         String json = new Gson().toJson(list);
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("application/json");

@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 public class ApplicationUser implements Serializable {
 
-    @ManyToMany(mappedBy = "applicationUserList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "applicationUserList", fetch = FetchType.EAGER)
     private List<ApplicationRole> applicationRoleList;
 
     @JoinColumn(name = "TEAM_ID", referencedColumnName = "ID")
@@ -179,7 +179,18 @@ public class ApplicationUser implements Serializable {
 
     @Override
     public String toString() {
-        return "task.model.ApplicationUser[ id=" + id + " ]";
+        return "ApplicationUser{" +
+                "applicationRoleList=" + applicationRoleList +
+                ", teamId=" + teamId +
+                ", id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 
     public Team getTeamId() {

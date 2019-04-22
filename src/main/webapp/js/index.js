@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    alert('hhhhhhhhhhhhhhhhh')
     $.ajax("TaskServlet",
         {
             method: "GET",
