@@ -8,6 +8,7 @@ To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -33,9 +34,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="css/skin-blue.min.css">
   <link rel="stylesheet" href="css/dashboardpage.css">
-
-  <!--  Task's page css -->
-  <link rel="stylesheet" href="css/task/task.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -98,7 +96,7 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Christophe</span>
+              <span class="hidden-xs">${currentUser.firstname}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -106,8 +104,12 @@ desired effect
                 <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Welcome, Christophe
-                  <small>Manager</small>
+                  Welcome, ${currentUser.firstname} ${currentUser.lastname}
+
+                  <c:forEach items="${currentUserRoles}" var="role">
+                    <small><c:out value="${role.name}"> </c:out> </small>
+                  </c:forEach>
+
                 </p>
               </li>
               <!-- Menu Body -->
@@ -131,7 +133,7 @@ desired effect
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<c:url value="logout"/>" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -156,7 +158,7 @@ desired effect
           <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Christophe</p>
+          <p>${currentUser.firstname}</p>
           <!-- Status -->
           <!-- <a href="#"><i class="fa fa-circle text-success"></i> </a> -->
         </div>
@@ -358,14 +360,7 @@ desired effect
 
 <!-- Page's css -->
 <script src="js/dashboardpage.js"></script>
-<script src="js/scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
-<script src="js/scripts/jquery.dataTables.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="js/index.js"></script>
-<script type="application/javascript" src="js/task/add-task.js"></script>
-
-
-<!-- Task Page's JS -->
-
+<script src="js/users.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

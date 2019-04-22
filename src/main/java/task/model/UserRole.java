@@ -6,7 +6,6 @@
 package task.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,30 +14,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
-
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author celem
  */
 @Entity
-@Table(name = "APPLICATION_ROLE")
-
-public class ApplicationRole implements Serializable {
-
-    @JoinTable(name = "USER_ROLE", joinColumns = {
-        @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = { @JoinColumn(name = "USER_ID", referencedColumnName = "ID")})
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<ApplicationUser> applicationUserList;
+@Table(name = "USER_ROLE")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "UserRole.findAll", query = "SELECT u FROM UserRole u")
+    , @NamedQuery(name = "UserRole.findById", query = "SELECT u FROM UserRole u WHERE u.id = :id")
+    , @NamedQuery(name = "UserRole.findByName", query = "SELECT u FROM UserRole u WHERE u.name = :name")
+    , @NamedQuery(name = "UserRole.findByRoleType", query = "SELECT u FROM UserRole u WHERE u.roleType = :roleType")})
+public class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,11 +47,21 @@ public class ApplicationRole implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "NAME")
     private String name;
+    @Column(name = "ROLE_TYPE")
+    private Integer roleType;
+    @JoinColumn(name = "APPLICATION_USER_ID", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private ApplicationUser applicationUserId;
 
-    public ApplicationRole() {
+    public UserRole() {
     }
 
-    public ApplicationRole(String name) {
+    public UserRole(Integer id) {
+        this.id = id;
+    }
+
+    public UserRole(Integer id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -75,6 +81,22 @@ public class ApplicationRole implements Serializable {
         this.name = name;
     }
 
+    public Integer getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(Integer roleType) {
+        this.roleType = roleType;
+    }
+
+    public ApplicationUser getApplicationUserId() {
+        return applicationUserId;
+    }
+
+    public void setApplicationUserId(ApplicationUser applicationUserId) {
+        this.applicationUserId = applicationUserId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -85,10 +107,10 @@ public class ApplicationRole implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ApplicationRole)) {
+        if (!(object instanceof UserRole)) {
             return false;
         }
-        ApplicationRole other = (ApplicationRole) object;
+        UserRole other = (UserRole) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,20 +119,7 @@ public class ApplicationRole implements Serializable {
 
     @Override
     public String toString() {
-        return "ApplicationRole{" +
-                //"applicationUserList=" + applicationUserList +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    @XmlTransient
-    public List<ApplicationUser> getApplicationUserList() {
-        return applicationUserList;
-    }
-
-    public void setApplicationUserList(List<ApplicationUser> applicationUserList) {
-        this.applicationUserList = applicationUserList;
+        return "task.model.UserRole[ id=" + id + " ]";
     }
     
 }
