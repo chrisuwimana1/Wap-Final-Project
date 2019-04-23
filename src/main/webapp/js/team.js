@@ -1,5 +1,5 @@
 $(function () {
-    alert("hello me")
+    
     $.get("getTeam",{dataType:"application/json"})
         .done(function (data) {
             $("#TeamListTableBody").empty();
