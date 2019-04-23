@@ -42,9 +42,15 @@ public class Team implements Serializable {
     public Team() {
     }
 
+    public Team(int id){
+        this.id=id;
+    }
+
     public Team(String name) {
         this.name = name;
     }
+
+
 
     public Integer getId() {
         return id;

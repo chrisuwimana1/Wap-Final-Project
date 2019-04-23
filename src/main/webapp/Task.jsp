@@ -1,7 +1,5 @@
 <link href="css/task/task.css" rel="stylesheet" type="text/css"/>
-<script>
-    alert(${sessionMap});
-</script>
+
 <div id = "task-main-container">
     <table id="datatable" class="display task-list-table">
         <thead>
