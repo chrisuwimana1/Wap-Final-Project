@@ -5,9 +5,17 @@
         <servlet-class>task.controller.TaskServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>dashboard</servlet-name>
+        <servlet-class>task.controller.LoginServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TaskServlet</servlet-name>
         <url-pattern>/TaskServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dashboard</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
