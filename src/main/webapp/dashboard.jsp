@@ -353,7 +353,7 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 <!-- jQuery 3 -->
 <script src="js/jquery.min.js"></script>
-
+<script src="js/scripts/dataTables.responsive.min.js" type="text/javascript"></script>
 <script src="js/scripts/jquery.dataTables.min.js" type="text/javascript"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="js/bootstrap.min.js"></script>

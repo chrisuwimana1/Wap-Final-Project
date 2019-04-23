@@ -40,13 +40,18 @@ public class TaskMngtDao<T> {
         }
     }
 
-    public void edit(T entity) {
+    public T edit(T entity) {
 
+        T t = null;
         try {
-            T merge = em.merge(entity);
+            em.getTransaction().begin();
+            t = em.merge(entity);
+            em.flush();
+            em.getTransaction().commit();
         } finally {
             em.close();
         }
+        return t;
     }
 
     public void remove(T entity) {
@@ -119,7 +124,7 @@ public class TaskMngtDao<T> {
 
     public List<T> executeNativeQuery(String queryStr, Class<T> entityClass, boolean like, Object[] params) throws Exception {
         try {
-            
+
             Query query = em.createNativeQuery(queryStr, entityClass);
 
             int i = 1;
