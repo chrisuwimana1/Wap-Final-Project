@@ -5,30 +5,28 @@
   Time: 10:57
   To change this template use File | Settings | File Templates.
 --%>
-<link rel="stylesheet" type="text/css" href="css/Team.css">
+
 <link rel="stylesheet" href="css/createTeam.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" type="text/css">
 
-<div class="teamlistTable">
+<link rel="stylesheet" type="text/css" href="css/Team.css">
 
-    <table id="table_id" class="display  ">
+<div class="teamlistTable table-responsive-md">
 
-        <thead>
+    <table id="table_id" class="display table table-striped">
+
+        <thead class="thead-dark">
         <tr>
             <th>Team Id</th>
             <th>Team Name</th>
             <th>Team Description</th>
         </tr>
         </thead>
-        <tfoot>
-        <tr>
-            <th>Team Id</th>
-            <th>Team Name</th>
-            <th>Team Description</th>
+        <tbody id="teamListTableBody">
+        <tr id="" class="teamListTableItem">
+
         </tr>
-        </tfoot>
-
-
+        </tbody>
 
 
     </table>
@@ -36,7 +34,8 @@
 </div>
 
 <div style="width:100%;background: #eeeeee;height:auto;">
-<form id="msform" class="" >
+
+    <form id="msform" class="" >
     <!-- progressbar -->
     <ul id="progressbar">
         <li class="active">Add Group Details</li>
