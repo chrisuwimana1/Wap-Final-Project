@@ -55,9 +55,11 @@ public class TaskMngtDao<T> {
     }
 
     public void remove(T entity) {
-
         try {
+            em.getTransaction().begin();
             em.remove(em.merge(entity));
+            em.flush();
+            em.getTransaction().commit();
         } finally {
             em.close();
         }
@@ -105,12 +107,19 @@ public class TaskMngtDao<T> {
     }
 
     public List<T> executeNativeQuery(String query, Class<T> entityClass) {
-
+        
+        System.out.println("query = " + query);
+        List<T> list = null;
         try {
-            return em.createNativeQuery(query, entityClass).getResultList();
+            list = em.createNativeQuery(query, entityClass).getResultList();
+            list.forEach((t) -> {
+                em.refresh(t);
+            });
+
         } finally {
             em.close();
         }
+        return list;
     }
 
     public Query createNamedQuery(String query) {

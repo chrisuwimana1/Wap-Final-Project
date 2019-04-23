@@ -16,8 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +30,9 @@ import javax.validation.constraints.Size;
 @Table(name = "TASK")
 
 public class Task implements Serializable {
+
+    @Column(name = "NUMBER_OF_DAYS")
+    private Integer numberOfDays;
 
     @Basic(optional = false)
     @NotNull
@@ -218,5 +219,13 @@ public class Task implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Integer getNumberOfDays() {
+        return numberOfDays;
+    }
+
+    public void setNumberOfDays(Integer numberOfDays) {
+        this.numberOfDays = numberOfDays;
     }
 }

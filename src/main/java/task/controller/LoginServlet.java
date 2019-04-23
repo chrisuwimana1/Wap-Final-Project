@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
             req.getRequestDispatcher("/dashboard.jsp").forward(req,resp);
             // System.out.print(currentUser.toString());
         } else {
-            doGet(req, resp);
+            req.getRequestDispatcher("/login.jsp").forward(req,resp);
         }
     }
 }

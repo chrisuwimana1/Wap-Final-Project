@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    var table;
+
     $('#task-close').click(function () {
         $('#myModal').css('display', 'none');
     });
@@ -11,6 +13,7 @@ $(document).ready(function () {
         $('#create-task').css('display', '');
         $('#update-task').css('display', 'none');
         $('#delete-task').css('display', 'none');
+        $('textarea').val('');
         $('#myModal').css('display', 'block');
     });
 
@@ -31,12 +34,13 @@ $(document).ready(function () {
                     taskOwner: $('#taskowner').val(),
                     priority: $('#priority').val(),
                     dueDate: $('#duedate').val(),
+                    numberOfDays: $('#numberOfDays').val(),
                     operation: 'create'
                 }
             }).done(function (data) {
-                $('input[type=date], input[type=text], select').val('');
+                $('input[type=number], input[type=text], select').val('');
                 $('textarea').val('');
-                loadTasks();
+                table.row.add(data);
             }).fail(function (a, b, c) {
                 alert("Fail: " + a + " >> " + b + " >> " + c);
             }).always(function () {
@@ -63,11 +67,14 @@ $(document).ready(function () {
                     taskOwner: $('#taskowner').val(),
                     priority: $('#priority').val(),
                     dueDate: $('#duedate').val(),
+                    numberOfDays: $('#numberOfDays').val(),
+                    status: $('#status').val(),
                     operation: 'update'
                 }
             }).done(function (data) {
                 $('#myModal').css('display', 'none');
                 loadTasks();
+                //$('#datatable').DataTable().ajax.reload();
             }).fail(function (a, b, c) {
                 alert("Fail: " + a + " >> " + b + " >> " + c);
             }).always(function () {
@@ -76,10 +83,34 @@ $(document).ready(function () {
         }
     });
 
+    $('#delete-task').click(function () {
+        $.ajax("TaskServlet", {
+            method: "POST",
+            data: {
+                taskId: $('#taskId').val(),
+                operation: 'delete'
+            }
+        }).done(function (data) {
+            $('#myModal').css('display', 'none');
+            //alert($('#rowId').val());
+            //$('#datatable').data.reload();
+            //$('#datatable').DataTable().draw();
+
+            //$('#datatable').DataTable().ajax.reload();
+            loadTasks();
+            //;
+        }).fail(function (a, b, c) {
+            alert("Fail: " + a + " >> " + b + " >> " + c);
+        }).always(function () {
+            alert("Always");
+        });
+
+    });
 
     $('#taskViewAllBar').click(loadTasks);
 
     function loadTasks() {
+
         $("#datatable").css('display', 'none');
         $.ajax("TaskServlet",
                 {
@@ -89,14 +120,11 @@ $(document).ready(function () {
                         operation: 'list'
                     }}).done(function (data) {
             console.log(data);
-            $("#datatable").css('display', '');
-
-            table = $("#datatable").addClass('nowrap').DataTable({
+            $("#datatable").css('display', '').addClass('nowrap');
+            table = $("#datatable").DataTable({
                 data: data,
                 responsive: true,
-                columnDefs: [
-                    {targets: [-1, -3], className: 'dt-body-right'}
-                ],
+                retrieve: true,
                 sort: true,
                 searching: true,
                 paging: true,
@@ -110,20 +138,29 @@ $(document).ready(function () {
                     {'data': 'taskOwnerName'},
                     {'data': 'projectManagerName'},
                     {'data': 'priority'},
-                    {'data': 'dueDate'}
+                    {'data': 'dueDate'},
+                    {'data': 'overDue'}
                 ]
             });
 
-            $('#datatable tbody').on('click', 'tr', function () {
+            $('#datatable tbody').on('dblclick', 'tr', function () {
                 $('#taskname').empty();
                 $('#taskname').val(table.row(this).data().name);
                 $('#taskId').val(table.row(this).data().id);
+                $('#rowId').val(table.row(this).id());
                 $('#description').val(table.row(this).data().description);
+                $('#numberOfDays').val(table.row(this).data().numberOfDays);
 
                 var categoryName = table.row(this).data().categoryName.trim();
                 $("#category option").filter(function () {
                     //may want to use $.trim in here
                     return $(this).text().trim() === categoryName.trim();
+                }).prop('selected', true);
+
+                var status = table.row(this).data().status;
+                $("#status option").filter(function () {
+                    //may want to use $.trim in here
+                    return $(this).val() == status;
                 }).prop('selected', true);
 
                 var taskOwnerName = table.row(this).data().taskOwnerName.trim();
@@ -140,7 +177,9 @@ $(document).ready(function () {
                     return $(this).val() == priority;
                 }).prop('selected', true);
 
-                $('#dueDate').val(new Date());
+                $('#dueDate').val(new Date('12/04/2018'));
+
+                //$('#dueDate').val(new Date());
                 $('#create-task').css('display', 'none');
                 $('#update-task').css('display', '');
                 $('#delete-task').css('display', '');
@@ -162,7 +201,10 @@ $(document).ready(function () {
                     }
                 });
             });
+
+            //
         }).always(function () {
+            
         }).fail(function () {
         });
     }

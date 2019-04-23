@@ -8,9 +8,7 @@
 
 
 <div class="teamlistTable">
-
     <table id="table_id" class="display  ">
-
         <thead>
         <tr>
             <th>Team Id</th>
@@ -25,13 +23,5 @@
             <th>Team Description</th>
         </tr>
         </tfoot>
-
-
-
-
     </table>
-
 </div>
-
-
-
