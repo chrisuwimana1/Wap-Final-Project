@@ -5,7 +5,7 @@
   Time: 10:57
   To change this template use File | Settings | File Templates.
 --%>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 <link rel="stylesheet" href="css/createTeam.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" type="text/css">
 
