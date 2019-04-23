@@ -17,8 +17,6 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-
-
 @WebFilter("/*")
 public class LoginFilter implements Filter {
 
@@ -26,43 +24,44 @@ public class LoginFilter implements Filter {
         // TODO Auto-generated constructor stub
     }
 
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
+    public void destroy() {
+        // TODO Auto-generated method stub
+    }
 
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+//        HttpServletRequest req = (HttpServletRequest) request;
+//        HttpServletResponse resp = (HttpServletResponse) response;
+//        
+//        
+//        System.out.println("resp = " + resp);
+//
+//        HttpSession session = req.getSession();
+//
+//        String servletPath = req.getServletPath();
+//
+//        // if he is on login page ignore
+//        if (servletPath.equals("/pages/")) {
+//            chain.doFilter(request, response);
+//            return;
+//        }
+//
+//        ApplicationUser loginedUser = (ApplicationUser) session.getAttribute("currentUser");
+//
+//        if (loginedUser != null) {
+//            // TODO
+//            // he can now access the page he want
+//            // in future He will only be able to acces the pages that he has permision to view
+            chain.doFilter(request, response);
+//            return;
+//        }
+//
+//        if (loginedUser == null) {
+//            // send him to the login page
+//            resp.sendRedirect(req.getContextPath());
+//        }
+    }
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-//		HttpServletRequest req = (HttpServletRequest) request;
-//		HttpServletResponse resp = (HttpServletResponse) response;
-//
-//
-//		HttpSession session = req.getSession();
-//
-//		String servletPath = req.getServletPath();
-//
-//		// if he is on login page ignore
-//		if(servletPath.equals("/")){
-			chain.doFilter(request, response);
-//			return;
-//		}
-//
-//		ApplicationUser loginedUser = (ApplicationUser) session.getAttribute("currentUser");
-//
-//		if(loginedUser != null){
-//			// TODO
-//			// he can now access the page he want
-//			// in future He will only be able to acces the pages that he has permision to view
-//			chain.doFilter(request, response);
-//			return;
-//		}
-//
-//		if(loginedUser == null){
-//			// send him to the login page
-//			resp.sendRedirect(req.getContextPath());
-//		}
-	}
-
-	public void init(FilterConfig fConfig) throws ServletException {
-	}
+    public void init(FilterConfig fConfig) throws ServletException {
+    }
 
 }

@@ -119,7 +119,8 @@ public class UserRole implements Serializable {
 
     @Override
     public String toString() {
-        return "task.model.UserRole[ id=" + id + " ]";
+        return "UserRole{" + "id=" + id + ", name=" + name + ", roleType=" + roleType + ", applicationUserId=" + applicationUserId + '}';
     }
+
     
 }

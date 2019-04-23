@@ -7,8 +7,18 @@
 /* Modal Header */
 .task-modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: #222d32;
     color: white;
+    opacity: 0.7
+}
+
+button{
+    background-color: black;
+    color: white;
+}
+
+.task-close{
+    cursor:pointer;
 }
 
 /* Modal Body */
@@ -17,8 +27,9 @@
 /* Modal Footer */
 .task-modal-footer {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: #222d32;
     color: white;
+    opacity: 0.7
 }
 
 /* Modal Content */
@@ -26,9 +37,10 @@
     position: relative;
     background-color: #fefefe;
     margin: auto;
+    margin-left: 20%;
     padding: 0;
     border: 1px solid #888;
-    width: 80%;
+    width: 50%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     animation-name: animatetop;
     animation-duration: 0.4s
@@ -48,8 +60,23 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+#datatable:hover{
+    cursor:pointer;
+}
+
 /* Add Animation */
 @keyframes animatetop {
     from {top: -300px; opacity: 0}
     to {top: 0; opacity: 1}
 } 
+
+@media screen and (max-width:750px){
+    #datatable.task-list-table tbody tr {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    #datatable.task-list-table{
+        width:100%;
+    }
+}
