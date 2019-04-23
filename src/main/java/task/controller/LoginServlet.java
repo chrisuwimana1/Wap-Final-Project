@@ -17,7 +17,7 @@ import task.service.LoginService;
 @WebServlet("/dashboard")
 public class LoginServlet extends HttpServlet {
 
-    static String LOGIN_PAGE_PATH = "/pages/login.jsp";
+    static String DASHBOARD_PAGE_PATH = "/dashboard.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 
         req.setAttribute("baseURL", baseURL);
 
-        req.getRequestDispatcher(LOGIN_PAGE_PATH).forward(req, resp);
+        req.getRequestDispatcher(DASHBOARD_PAGE_PATH).forward(req, resp);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("psw");
 
 
-        System.out.println(username + "............" );
+        // System.out.println(username + "............" );
         ApplicationUser currentUser = LoginService.login(username, password);
 
         if (currentUser != null) {
@@ -43,9 +43,9 @@ public class LoginServlet extends HttpServlet {
 
             List<UserRole> currentUserRoles = currentUser.getUserRoleList();
 
-            currentUserRoles.forEach( x-> System.out.println(x.toString()));
+            System.out.println("list ..."+currentUserRoles);
 
-            // System.out.println(" ........." +);
+            currentUserRoles.forEach( x-> System.out.println("role "+ x.toString()));
 
             HttpSession session = req.getSession();
 
