@@ -1,7 +1,7 @@
 $(function () {
 
 
-   $("#teamviewAllBar").click(function () {
+   $("#teamviewAlgit git lBar").click(function () {
        // $(".teamlistTable").hide()
 
        $.get("getTeam",{dataType:"application/json"})
