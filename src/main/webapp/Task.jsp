@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="css/task/task.css" rel="stylesheet" type="text/css"/>
-<script src="js/task/task-list.js" type="text/javascript"></script>
+
 <div id = "task-main-container">
     <table id="datatable" class="display">
         <thead>

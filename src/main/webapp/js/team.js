@@ -1,8 +1,10 @@
 $(function () {
 
 
-   $("#teamviewAlgit git lBar").click(function () {
-       // $(".teamlistTable").hide()
+   $("#teamviewAllBar").click(function () {
+        $(".teamlistTable").hide()
+       $("#msform").removeClass("active")
+
 
        $.get("getTeam",{dataType:"application/json"})
            .done(function (data) {
@@ -11,6 +13,7 @@ $(function () {
                    data: data,
                    sort: true,
                    searching: true,
+                   retrieve:true,
                    paging: true,
                    aLengthMenu: [[2, 5, 10, -1], [2, 5, 10, "All"]],
                    iDisplayLength: 10,
@@ -44,10 +47,55 @@ $(function () {
            })
            .always(function () {
 
-               // $(".teamlistTable").show();
+                $(".teamlistTable").show();
            });
    })
 
+
+
+    $("#teamAddBar").click(function () {
+        $(".teamlistTable").hide()
+
+        $("#msform").addClass("active")
+
+
+        
+    })
+
+
+    $("#goToTeamMemberSwitch").click(function () {
+
+        $.get("addservlet",{dataType: "application/json"})
+            .done(function (data) {
+
+                $("#teamalluserlist").empty()
+                for (let i =0; i<data.length;i++){
+                    $("#teamalluserlist").append(" <li draggable=\"true\" id='"+data[i].id+"' ondragstart=\"drag(event)\">"+data[i].firstname+" "+data[i].lastname+"</li>")
+                }
+
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+            })
+    })
+
+    $("#getSelectedUsersBtn").click(function () {
+
+
+        $(".teamconftitle.userList ul").empty();
+        $(".teamconftitle.userList ul").append($("#teamnewmemberlist").children())
+
+
+        $(".teamconftitle.teamname span").text("");
+        $(".teamconftitle.teamname span").text($("#addTeamNameInput").val());
+
+
+        $(".teamconftitle.teamdescr span").text("");
+        $(".teamconftitle.teamdescr span").text($("#addTeamNameTextArea").val());
+    })
 
 
 

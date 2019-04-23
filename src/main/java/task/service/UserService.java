@@ -5,6 +5,7 @@ import java.util.List;
 
 import task.dao.TaskMngtDao;
 import task.model.ApplicationUser;
+import task.model.UserEnum;
 
 public class UserService {
 
@@ -24,6 +25,14 @@ public class UserService {
 		TaskMngtDao<ApplicationUser> useDao = new TaskMngtDao<>();
 		useDao.edit(user);
 		// .....
+	}
+
+	public static List<ApplicationUser> getUsersbyRole(UserEnum role){
+
+       String sql = "SELECT * FROM APPLICATION_USER ,USER_ROLE WHERE APPLICATION_USER.ID= USER_ROLE.APPLICATION_USER_ID and USER_ROLE.ROLE_TYPE="+role.getUserRole()+" and TEAM_ID is null";
+
+       return new TaskMngtDao<ApplicationUser>().executeNativeQuery(sql,ApplicationUser.class);
+
 	}
 
 }
