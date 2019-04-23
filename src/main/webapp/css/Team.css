@@ -1,1 +1,16 @@
-/**/
+body{
+    font-size: 14px;
+}
+
+.teamlistTable #table_id{
+
+    font-size: 14px;
+}
+
+.teamlistTable{
+    display:none;
+}
+
+.teamlistTable.active{
+    display: block;
+}
