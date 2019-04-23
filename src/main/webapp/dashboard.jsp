@@ -362,11 +362,17 @@ desired effect
 <!-- Page's css -->
 <script src="js/dashboardpage.js"></script>
 <script src="js/users.js"></script>
-<script src="js/task/add-task.js" type="text/javascript"></script>
+
 <script src="js/task/task-list.js" type="text/javascript"></script>
+
 <script src="js/team.js"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+
+<%--my view team page--%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="js/createTeam.js"></script>
 </body>
 </html>

@@ -80,7 +80,30 @@ $(".previous").click(function(){
 });
 
 $(".submit").click(function(){
-    return false;
+
+    var teamName =  $(".teamconftitle.teamname span").text();
+    var teamDescr =  $(".teamconftitle.teamdescr span").text();
+    var teamMember = getTeamList($(".teamconftitle.userList ul"))
+
+    alert(teamMember.toString())
+
+    $.ajax("addservlet",{
+
+        method:'POST',
+        data:{
+            name:teamName,
+            description:teamDescr,
+            members:teamMember.toString()
+        }
+             }).done(function (data) {
+
+                 alert("okay")
+             })
+               .fail()
+               .always()
+
+
+
 })
 
 
@@ -100,4 +123,14 @@ function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
+}
+
+function getTeamList(teamlist) {
+   var myArr = new Array(teamlist.children().length)
+
+    for (let i=0; i<teamlist.children().length;i++){
+        myArr[i] =teamlist.children().eq(i).attr("id");
+    }
+
+    return myArr;
 }
