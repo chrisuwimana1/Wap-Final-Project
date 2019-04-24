@@ -20,7 +20,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import task.model.ApplicationUser;
 import task.model.Task;
+import task.model.UserRole;
 import task.service.TaskService;
 
 /**
@@ -63,6 +66,29 @@ public class NewTaskServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+        HttpSession session = request.getSession();
+        
+        ApplicationUser currentUser = (ApplicationUser) session.getAttribute("currentUser");
+        
+        session.setAttribute("PMDisabled", "disabled");
+        
+        List<UserRole> roles = currentUser.getUserRoleList();
+        
+        roles.stream().map((role) -> role.getRoleType()).map((roleType) -> {
+            if (roleType == 1) {
+                System.out.println("1 ========================> roleType = " + roleType);
+            }
+            return roleType;
+        }).map((roleType) -> {
+            if (roleType == 2) {
+                System.out.println("2 +++++++++++++++++++++++++++roleType = " + roleType);
+                session.setAttribute("PMDisabled", "");
+            }
+            return roleType;
+        }).filter((roleType) -> (roleType == 3)).forEachOrdered((item) -> {
+            System.out.println("3 ------------------------------roleType = " + item);
+            session.setAttribute("DevDisabled", "");
+        });
         List<Task> tasks = TaskService.getAllTasks();
         
         List<Map> newList = new ArrayList<>();

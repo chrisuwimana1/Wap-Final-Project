@@ -1,9 +1,6 @@
 $(document).ready(function () {
 
-//    $('#myTable').DataTable({
-//        "ordering": false // false to disable sorting (or any other option)
-//    });
-//    $('.dataTables_length').addClass('bs-select');
+    $('#myTable').DataTable();
 
     $("#byOwner").on("keyup", function () {
         // Declare variables
@@ -144,7 +141,7 @@ $(document).ready(function () {
     $('#new-task').click(function () {
         $('.error-message').text('');
         $('#taskform-title').text('Create Task');
-        $('input[type=date], input[type=text] , input[type=number] select').val('');
+        $('input[type=date], input[type=text], select').val('');
         $('input[type=number]').val('0');
         $('#create-task').css('display', '');
         $('#update-task').css('display', 'none');
@@ -231,6 +228,7 @@ $(document).ready(function () {
         let taskname = $('#taskname').val();
         let status = $('#status option:selected').val();
         let numberOfDays = $('#numberOfDays').val();
+        let submit = true;
 
         if (status === "") {
             $('#category-error').html("Status is required");
@@ -278,7 +276,6 @@ $(document).ready(function () {
                 }
             }).done(function (data) {
                 $('#myModal').css('display', 'none');
-
                 //$('#datatable').DataTable().ajax.reload();
             }).fail(function (a, b, c) {
                 alert("Fail: " + a + " >> " + b + " >> " + c);
