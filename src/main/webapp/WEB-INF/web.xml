@@ -5,30 +5,38 @@
         <servlet-class>task.controller.TaskServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-<!--    <servlet>-->
-<!--        <servlet-name>dashboard</servlet-name>-->
-<!--        <servlet-class>task.controller.LoginServlet</servlet-class>-->
-<!--    </servlet>-->
+    <servlet>
+        <servlet-name>dashboard</servlet-name>
+        <servlet-class>task.controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>tasks</servlet-name>
+        <servlet-class>task.controller.NewTaskServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TaskServlet</servlet-name>
         <url-pattern>/TaskServlet</url-pattern>
     </servlet-mapping>
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>dashboard</servlet-name>-->
-<!--        <url-pattern>/dashboard</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>dashboard</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>tasks</servlet-name>
+        <url-pattern>/tasks</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
-<!--    <filter>-->
-<!--        <filter-name>LoginFilter</filter-name>-->
-<!--        <filter-class>task.filters.LoginFilter</filter-class>-->
-<!--    </filter>-->
-<!--    <filter-mapping>-->
-<!--        <filter-name>LoginFilter</filter-name>-->
-<!--        <url-pattern>/pages/*</url-pattern>-->
-<!--    </filter-mapping>-->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>task.filters.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/pages/*</url-pattern>
+    </filter-mapping>
 </web-app>

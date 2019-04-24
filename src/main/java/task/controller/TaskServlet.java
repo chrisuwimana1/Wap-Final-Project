@@ -48,63 +48,32 @@ public class TaskServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String operation = request.getParameter("operation");
         HttpSession session = request.getSession();
-
+        
         ApplicationUser currentUser = (ApplicationUser) session.getAttribute("currentUser");
-
+        
+        session.setAttribute("PMDisabled", "disabled");
+        
         List<UserRole> roles = currentUser.getUserRoleList();
         
-        Map<String,Object> sessionMap = new HashMap<>();
-        
-        sessionMap.put("isAdmin", false);
-        sessionMap.put("isPM", false);
-        sessionMap.put("isDev", false);
-
-        sessionMap.put("newTask", "disabled");
-        sessionMap.put("taskName", "disabled");
-        sessionMap.put("description", "disabled");
-        sessionMap.put("category", "disabled");
-        sessionMap.put("taskowner", "disabled");
-        sessionMap.put("priority", "disabled");
-        sessionMap.put("status", "disabled");
-        sessionMap.put("numberOfDays", "disabled");
-        sessionMap.put("createTask", "disabled");
-        sessionMap.put("updateTask", "disabled");
-        sessionMap.put("deleteTask", "disabled");
-
         roles.stream().map((role) -> role.getRoleType()).map((roleType) -> {
             if (roleType == 1) {
                 System.out.println("1 ========================> roleType = " + roleType);
-                sessionMap.put("isAdmin", true);
             }
             return roleType;
         }).map((roleType) -> {
             if (roleType == 2) {
                 System.out.println("2 +++++++++++++++++++++++++++roleType = " + roleType);
-                sessionMap.put("isPM", true);
-                sessionMap.put("newTask", "");
-                sessionMap.put("taskName", "");
-                sessionMap.put("description", "");
-                sessionMap.put("category", "");
-                sessionMap.put("taskowner", "");
-                sessionMap.put("priority", "");
-                sessionMap.put("status", "");
-                sessionMap.put("numberOfDays", "");
-                sessionMap.put("createTask", "");
-                sessionMap.put("updateTask", "");
-                sessionMap.put("deleteTask", "");
+                session.setAttribute("PMDisabled", "");
             }
             return roleType;
         }).filter((roleType) -> (roleType == 3)).forEachOrdered((item) -> {
             System.out.println("3 ------------------------------roleType = " + item);
-            sessionMap.put("isDev", true);
-            sessionMap.put("status", "");
+            session.setAttribute("DevDisabled", "");
         });
         
-        session.setAttribute("sessionMap",sessionMap);
-
         if ("create".equals(operation) || "update".equals(operation) || "delete".equals(operation)) {
             String taskName = request.getParameter("taskName");
             String taskId = request.getParameter("taskId");
@@ -115,7 +84,7 @@ public class TaskServlet extends HttpServlet {
             String status = request.getParameter("status");
             //String dueDate = request.getParameter("dueDate");
             String numberOfDays = request.getParameter("numberOfDays");
-
+            
             try {
                 //Date newDate = ;
                 if (null != operation) {
@@ -137,25 +106,20 @@ public class TaskServlet extends HttpServlet {
                             break;
                     }
                 }
-
+                
             } catch (Exception e) {
                 e.printStackTrace(System.out);
             }
-        }
-
-        List<Task> allTasks = TaskService.getAllTasks();
-
-        List<Task> list = new TaskMngtDao<Task>().executeNativeQuery("select * from TASK", Task.class);
-
-        List<Map> newList = new ArrayList<>();
-
-        list.stream().map((task) -> {
+        } else if ("get".equals(operation)) {
+            
+            Task task = TaskService.getTask(Integer.parseInt(request.getParameter("taskId")));
             Map<String, Object> map = new HashMap();
             map.put("id", task.getId());
             map.put("name", task.getName());
             map.put("categoryId", task.getCategoryId().getId());
             map.put("categoryName", task.getCategoryId().getName());
             map.put("taskOwnerId", task.getTaskOwnerId().getId());
+           map.put("team", task.getTaskOwnerId().getTeamId()==null?"":task.getTaskOwnerId().getTeamId().getName());
             map.put("taskOwnerName", task.getTaskOwnerId().getFirstname() + " " + task.getTaskOwnerId().getLastname());
             map.put("projectManagerId", task.getProjectManagerId().getFirstname() + " " + task.getProjectManagerId().getLastname());
             map.put("projectManagerName", task.getProjectManagerId().getUsername());
@@ -163,30 +127,68 @@ public class TaskServlet extends HttpServlet {
             map.put("status", task.getStatus());
             map.put("dueDate", task.getDueDate() == null ? "" : new SimpleDateFormat("MM/dd/yyyy").format(task.getDueDate()));
             map.put("description", task.getDescription());
-
+            
             Date now = Calendar.getInstance().getTime();
             Date dueDate = task.getDueDate();
-
+            
             long diffInMillies = dueDate.getTime() - now.getTime();
             long numberOfDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
+            
             map.put("numberOfDays", numberOfDays);
             map.put("overDue", diffInMillies > 0 ? "No" : "Yes");
-
+            
+            map.put("creationDate", task.getCreationDate() == null ? "" : new SimpleDateFormat("MM/dd/yyyy").format(task.getCreationDate()));
+           
+            System.out.println("task = " + task);
+            String json = new Gson().toJson(map);
+            System.out.println("json = " + json);
+            response.setContentType("application/json");
+            try (PrintWriter out = response.getWriter()) {
+                
+                out.write(json);
+                
+            }
+        }
+        
+        List<Task> allTasks = TaskService.getAllTasks();
+        
+        List<Map> newList = new ArrayList<>();
+        
+        allTasks.stream().map((task) -> {
+            Map<String, Object> map = new HashMap();
+            map.put("id", task.getId());
+            map.put("name", task.getName());
+            map.put("categoryId", task.getCategoryId().getId());
+            map.put("categoryName", task.getCategoryId().getName());
+            map.put("taskOwnerId", task.getTaskOwnerId().getId());
+            map.put("team", task.getTaskOwnerId().getTeamId()==null?"":task.getTaskOwnerId().getTeamId().getName());
+            map.put("taskOwnerName", task.getTaskOwnerId().getFirstname() + " " + task.getTaskOwnerId().getLastname());
+            map.put("projectManagerId", task.getProjectManagerId().getFirstname() + " " + task.getProjectManagerId().getLastname());
+            map.put("projectManagerName", task.getProjectManagerId().getUsername());
+            map.put("priority", task.getPriority());
+            map.put("status", task.getStatus());
+            map.put("dueDate", task.getDueDate() == null ? "" : new SimpleDateFormat("MM/dd/yyyy").format(task.getDueDate()));
+            map.put("description", task.getDescription());
+            
+            Date now = Calendar.getInstance().getTime();
+            Date dueDate = task.getDueDate();
+            
+            long diffInMillies = dueDate.getTime() - now.getTime();
+            long numberOfDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            
+            map.put("numberOfDays", numberOfDays);
+            map.put("overDue", diffInMillies > 0 ? "No" : "Yes");
+            
             map.put("creationDate", task.getCreationDate() == null ? "" : new SimpleDateFormat("MM/dd/yyyy").format(task.getCreationDate()));
             return map;
         }).forEachOrdered((map) -> {
             newList.add(map);
         });
-
-        String json = new Gson().toJson(newList);
-        try (PrintWriter out = response.getWriter()) {
-            response.setContentType("application/json");
-            out.write(json);
-        }
-
+        
+        request.setAttribute("tasks", newList);        
+        
     }
-
+    
     public Date getNewDate(String date) throws Exception {
         return new SimpleDateFormat("yyyy-MM-dd").parse(date);
     }
@@ -204,25 +206,25 @@ public class TaskServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         loadConfig(config);
-
+        
     }
-
+    
     private void loadConfig(ServletConfig config) {
         List<ApplicationUser> users = new TaskMngtDao<ApplicationUser>().findAll(ApplicationUser.class);
         List<ApplicationUser> devs = new ArrayList<>();
-
+        
         users.forEach((user) -> {
             List<UserRole> userRoleList = user.getUserRoleList();
             userRoleList.stream().filter((userRole) -> (userRole.getRoleType() == 3)).forEachOrdered((item) -> {
                 devs.add(user);
             });
         });
-
+        
         List<Category> categories = new TaskMngtDao<Category>().findAll(Category.class);
-
+        
         config.getServletContext().setAttribute("categories", categories);
         config.getServletContext().setAttribute("devs", devs);
-
+        
         System.out.println("categories = " + categories);
         System.out.println("devs = " + devs);
     }

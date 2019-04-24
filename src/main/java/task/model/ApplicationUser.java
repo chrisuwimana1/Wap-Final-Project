@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -34,8 +33,6 @@ public class ApplicationUser implements Serializable {
 
     @OneToMany(mappedBy = "applicationUserId", fetch = FetchType.EAGER)
     private List<UserRole> userRoleList;
-
-   
 
     @JoinColumn(name = "TEAM_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -201,6 +198,5 @@ public class ApplicationUser implements Serializable {
     public void setUserRoleList(List<UserRole> userRoleList) {
         this.userRoleList = userRoleList;
     }
-
 
 }
