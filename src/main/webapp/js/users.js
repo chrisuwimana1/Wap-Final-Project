@@ -22,14 +22,14 @@ $(document).ready(
             .always();
 
         $("#profilebtn").click(function () {
-            alert("it's working now show the profile");
+            // alert("it's working now show the profile");
         });
 
 
         // edit one user when you click one the row
         $(document).on("click","tr", function(){
             var currId = $(this).attr('id');
-            alert(currId);
+            // alert(currId);
 
             $.getJSON("users?id="+ currId, function (data) {
                 var items = [];
@@ -58,7 +58,7 @@ $(document).ready(
             }).fail(function () {
                 alert("fail");
             });
-            alert("curr Id" + currId);
+            // alert("curr Id" + currId);
         });
 
 

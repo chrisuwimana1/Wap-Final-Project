@@ -30,6 +30,8 @@ public class UserAddServlet extends HttpServlet {
 		String lastname = request.getParameter("lastname");
 		String email = request.getParameter("email");
 		String team = request.getParameter("team");
+		String phone = request.getParameter("phone");
+		String location = request.getParameter("location");
 
 		System.out.println("Firstname == "+ firstname);
 		System.out.println("username == "+ username);
@@ -40,7 +42,8 @@ public class UserAddServlet extends HttpServlet {
 		user.setFirstname(firstname);
 		user.setLastname(lastname);
 		user.setPassword(password);
-
+		user.setLastname(location);
+		user.setPhone(phone);
 		// create a new user to the DB
 		UserService.addUser(user);
 
