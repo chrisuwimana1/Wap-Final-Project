@@ -10,16 +10,25 @@ import java.util.stream.Collectors;
 
 public class TeamService {
 
-    public static void createTeam(String name) {
+    public static int createTeam(String name,String descr) {
 
         Team team = new Team( name);
+        team.setDescription(descr);
 
         new TaskMngtDao<Team>().create(team);
+
+        return getTeamMaxId();
     }
 
     public static void editTeam(Team team) {
 
         new TaskMngtDao<Team>().edit(team);
+    }
+
+    public static int getTeamMaxId(){
+
+        String sql = "select ID from TEAM order by ID desc LIMIT 1";
+        return new TaskMngtDao<Team>().executeNativeQuery(sql,Team.class).get(0).getId();
     }
 
     public static Team getTeambyId(Integer id) {
