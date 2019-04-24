@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.PUT;
 
 import com.google.gson.Gson;
@@ -21,45 +22,68 @@ import task.service.UserService;
 @WebServlet("/users")
 public class UserViewServlet extends HttpServlet {
 	
-	static String VIEWUSER_PAGE_PATH = "/Users.jsp";
+	static String VIEWUSER_PAGE_PATH = "/viewUser.jsp";
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		List<ApplicationUser> users = UserService.getAll();
 
+		String id = req.getParameter("id");
 
-		List<Map> finalList = new ArrayList<Map>();
+		if(id == null){
+			// view all users
+			List<ApplicationUser> users = UserService.getAll();
+			req.setAttribute("users", users);
+			req.getRequestDispatcher(VIEWUSER_PAGE_PATH).forward(req, resp);
 
-		users.forEach(tr->{
-			Map<String, Object> map = new HashMap<>();
-			map.put("id", tr.getId());
-			map.put("firstname", tr.getFirstname());
-			map.put("lastname", tr.getLastname());
-			map.put("email", tr.getEmail());
-			map.put("username", tr.getUsername());
-			map.put("password", tr.getPassword());
-			
-			finalList.add(map);
-		});
-		
-		
-		System.out.println("... users "+ users);
+		}else{
+			// here we are going to edit one user
+			Integer currId = Integer.parseInt(id);
 
-		String usersJsonString = new Gson().toJson(finalList);
+			ApplicationUser editUserById = UserService.getUserById(currId);
 
-		PrintWriter out = resp.getWriter();
-		resp.setContentType("application/json");
-		resp.setCharacterEncoding("UTF-8");
-		out.print(usersJsonString);
-		out.flush();
+			HttpSession session = req.getSession();
+
+			session.setAttribute("editUser", editUserById);
+			req.getRequestDispatcher("/editUser.jsp").forward(req, resp);
+		}
+
 	}
 	
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+
+		HttpSession session = req.getSession();
+
+		ApplicationUser currUser = (ApplicationUser) session.getAttribute("editUser");
+		String username ="";
+		if(currUser == null){
+			username = req.getParameter("uname");
+		}else{
+			username = currUser.getUsername();
+		}
+
+		String password = req.getParameter("pwd");
+		String firstname = req.getParameter("fname");
+		String lastname = req.getParameter("lname");
+		String email = req.getParameter("email");
+		String phone = req.getParameter("phone");
+		String location = req.getParameter("location");
+
+		ApplicationUser editedUser = new ApplicationUser();
+		editedUser.setUsername(username);
+		editedUser.setPassword(password);
+		editedUser.setId(currUser.getId());
+		editedUser.setFirstname(firstname);
+		editedUser.setEmail(email);
+		editedUser.setPhone(phone);
+		editedUser.setLastname(lastname);
+		editedUser.setLocation(location);
+
+		// edited user
+		UserService.updateUser(editedUser);
+		// redirect to users page
+		doGet(req, resp);
 	}
 
 }

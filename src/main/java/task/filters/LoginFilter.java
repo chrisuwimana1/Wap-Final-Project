@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  */
 
 
-@WebFilter("/*")
+// @WebFilter("/*")
 public class LoginFilter implements Filter {
 
     public LoginFilter() {

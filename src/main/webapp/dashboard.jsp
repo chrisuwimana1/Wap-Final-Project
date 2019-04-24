@@ -34,6 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="css/skin-blue.min.css">
   <link rel="stylesheet" href="css/dashboardpage.css">
+  <link rel="stylesheet" href="css/users.css">
   <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
   <link rel="stylesheet" type="text/css" href="css/Team.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -98,6 +99,7 @@ desired effect
               <img  src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">${currentUser.firstname}</span>
+
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -211,8 +213,9 @@ desired effect
               <div class="sidebarsubItem ">
                 <ul>
           
-                  <li class="active" id="usersviewAllBar">View All Users</li>
-                  <li id="userAddBar">+Add New Use</li>
+                  <li class="active" id="usersviewAllBar">
+                    <a href="<c:url value="users"/> ">View All Users</a> </li>
+                  <li id="userAddBar"><a href="<c:url value="adduser"/> ">+Add New User</a></li>
                   
                 </ul>
               </div>
@@ -353,7 +356,7 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 <!-- jQuery 3 -->
 <script src="js/jquery.min.js"></script>
-
+<script src="js/scripts/dataTables.responsive.min.js" type="text/javascript"></script>
 <script src="js/scripts/jquery.dataTables.min.js" type="text/javascript"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="js/bootstrap.min.js"></script>

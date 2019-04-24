@@ -17,6 +17,8 @@ public class LoginService {
 		List<ApplicationUser> user = new TaskMngtDao<ApplicationUser>()
 				.executeNativeQuery(loginQuery,ApplicationUser.class);
 
+		if(user == null || user.size() == 0)
+			return null;
                 
 		return user.get(0);
 	}

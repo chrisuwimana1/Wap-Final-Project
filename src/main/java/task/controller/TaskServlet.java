@@ -14,12 +14,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import task.dao.TaskMngtDao;
+import task.model.ApplicationUser;
+import task.model.Category;
 import task.model.Task;
+import task.model.UserRole;
 import task.service.TaskService;
 
 /**
@@ -38,10 +42,12 @@ public class TaskServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String operation = request.getParameter("operation");
+
+        System.out.println("operation = " + operation);
 
         if ("list".equals(operation)) {
             List<Task> allTasks = TaskService.getAllTasks();
@@ -52,16 +58,19 @@ public class TaskServlet extends HttpServlet {
 
             list.stream().map((task) -> {
                 Map<String, Object> map = new HashMap();
-                map.put("name", task.getName());
                 map.put("id", task.getId());
-                map.put("category", task.getCategoryId().getName());
-                map.put("taskOwnerId", task.getCategoryId().getName());
-                map.put("projectManagerId", task.getCategoryId().getName());
+                map.put("name", task.getName());
+                map.put("categoryId", task.getCategoryId().getId());
+                map.put("categoryName", task.getCategoryId().getName());
+                map.put("taskOwnerId", task.getTaskOwnerId().getId());
+                map.put("taskOwnerName", task.getTaskOwnerId().getFirstname() + " " + task.getTaskOwnerId().getLastname());
+                map.put("projectManagerId", task.getProjectManagerId().getFirstname() + " " + task.getProjectManagerId().getLastname());
+                map.put("projectManagerName", task.getProjectManagerId().getUsername());
                 map.put("priority", task.getPriority());
                 map.put("status", task.getStatus());
-                map.put("dueDate", task.getDueDate() == null ? "" : new SimpleDateFormat("MM-dd-yyyy").format(task.getDueDate()));
+                map.put("dueDate", task.getDueDate() == null ? "" : new SimpleDateFormat("MM/dd/yyyy").format(task.getDueDate()));
                 map.put("description", task.getDescription());
-                map.put("creationDate", task.getCreationDate() == null ? "" : new SimpleDateFormat("MM-dd-yyyy").format(task.getCreationDate()));
+                map.put("creationDate", task.getCreationDate() == null ? "" : new SimpleDateFormat("MM/dd/yyyy").format(task.getCreationDate()));
                 return map;
             }).forEachOrdered((map) -> {
                 newList.add(map);
@@ -73,30 +82,28 @@ public class TaskServlet extends HttpServlet {
                 response.setContentType("application/json");
                 out.write(json);
             }
-        } else if ("add".equals(operation)) {
+        } else if ("create".equals(operation) || "update".equals(operation)) {
             String taskName = request.getParameter("taskName");
+            String taskId = request.getParameter("taskId");
             String description = request.getParameter("description");
             String category = request.getParameter("category");
             String taskOwner = request.getParameter("taskOwner");
             String priority = request.getParameter("priority");
             String dueDate = request.getParameter("dueDate");
 
-            System.out.println(taskName);
-            System.out.println(description);
-            System.out.println(category);
-            System.out.println(taskOwner);
-            System.out.println(priority);
-            System.out.println(dueDate);
+            ApplicationUser currentUser = (ApplicationUser) request.getSession().getAttribute("currentUser");
 
             int priorityInt = Integer.valueOf(priority);
+            
             int categoryInt = Integer.valueOf(category);
             try {
                 Date newDate = getNewDate(dueDate);
-                System.out.println(newDate);
-                TaskService.createNewTask(1, 1, categoryInt, priorityInt, taskName, newDate, description);
-                try (PrintWriter out = response.getWriter()) {
-                    out.print("Sussess");
+                if ("create".equals(operation)) {
+                    TaskService.createNewTask(Integer.parseInt(taskOwner), currentUser.getId(), categoryInt, priorityInt, taskName, newDate, description);
+                } else {
+                    TaskService.updateTask(Integer.parseInt(taskId), Integer.parseInt(taskOwner), categoryInt, priorityInt, taskName, newDate, description);
                 }
+
             } catch (Exception e) {
                 e.printStackTrace(System.out);
             }
@@ -117,5 +124,24 @@ public class TaskServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+
+        List<ApplicationUser> users = new TaskMngtDao<ApplicationUser>().findAll(ApplicationUser.class);
+        List<ApplicationUser> devs = new ArrayList<>();
+
+        users.forEach((user) -> {
+            List<UserRole> userRoleList = user.getUserRoleList();
+            userRoleList.stream().filter((userRole) -> (userRole.getRoleType() == 3)).forEachOrdered((_item) -> {
+                devs.add(user);
+            });
+        });
+        
+        List<Category> categories = new TaskMngtDao<Category>().findAll(Category.class);       
+
+        config.getServletContext().setAttribute("categories", categories);
+        config.getServletContext().setAttribute("devs", devs);
+    }
 
 }

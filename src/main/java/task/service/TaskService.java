@@ -28,9 +28,14 @@ public class TaskService {
     }
 
     public static void updateTask(Integer taskId, Integer ownerId, Integer categoryId, Integer priority, String name, Date dueDate, String description) {
-        Task task = new Task(taskId, priority, name, dueDate);
+        Task task = new TaskMngtDao<Task>().find(Task.class, taskId);
         task.setTaskOwnerId(new ApplicationUser(ownerId));
+        task.setDescription(description);
+        task.setDueDate(dueDate);
+        task.setPriority(priority);
+        task.setName(name);
         task.setCategoryId(new Category(categoryId));
+        System.out.println("task = " + task);
         new TaskMngtDao<>().edit(task);
     }
 
