@@ -242,58 +242,21 @@ desired effect
               | Your Page Content Here |
               -------------------------->
 
+
+            <h1>Please confirm delete</h1>
+            <h2 style="color: red">${delUser.firstname} ${delUser.lastname}</h2>
             <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="users" method="post">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input name="uname" type="text" class="form-control" id="username" value="${editUser.username}" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input name="pwd" type="password" class="form-control" id="password" value="${editUser.password}">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputFile">Firstname</label>
-                                <input name="fname" type="text" class="form-control" id="exampleInputFile" value="${editUser.firstname}">
-                            </div>
-                            <div class="form-group">
-                                <label for="lastname">Lastname</label>
-                                <input name="lname" type="text" class="form-control" id="lastname" value="${editUser.lastname}">
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input name="phone" type="text" class="form-control" id="phone" value="${editUser.phone}">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input name="email" type="email" class="form-control" id="email" value="${editUser.email}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="location">Location</label>
-                                <input name="location" type="text" class="form-control" id="location" value="${editUser.location}">
-                            </div>
-
-<%--                            <div class="form-group">--%>
-<%--                                <label>Roles</label>--%>
-<%--                                <select class="form-control select2" style="width: 100%;">--%>
-<%--                                    <c:forEach items="${editUser.role}" var="role">--%>
-<%--                                        <option >${role.name}</option>--%>
-<%--                                    </c:forEach>--%>
-<%--                                </select>--%>
-<%--                            </div>--%>
-                        </div>
+                    <form role="form" action="delete" method="post">
                         <!-- /.box-body -->
+                        <input type="hidden" name="id" value="${delUser.id}">
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
                     </form>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                        <a href="<c:url value="delete"/>?id=${editUser.id} " type="submit" class="btn btn-danger">Delete</a>
-                    </div>
 
                 </div>
             </div>

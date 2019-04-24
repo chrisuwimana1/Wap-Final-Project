@@ -1,6 +1,7 @@
 package task.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -46,12 +47,21 @@ public class LoginServlet extends HttpServlet {
 
             System.out.println("list ..."+currentUserRoles);
 
-            currentUserRoles.forEach( x-> System.out.println("role "+ x.toString()));
 
-
+            List<String> roles = new ArrayList<>();
+            currentUserRoles.forEach( x-> {
+                if(x.getRoleType() == 1  )
+                    roles.add("Admin");
+                if(x.getRoleType() == 2)
+                    roles.add("Project Manager");
+                if(x.getRoleType() == 3)
+                    roles.add("Developer");
+            });
 
             HttpSession session = req.getSession();
 
+
+            // roles.forEach( x -> System.out.println(x +" ..."));
             session.setAttribute("currentUser", currentUser);
 
             session.setAttribute("currentUserRoles", currentUserRoles);

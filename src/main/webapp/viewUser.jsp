@@ -228,11 +228,12 @@ desired effect
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
+            <h1 style="width: 50%;">
                 Users
                 </br>
                 <small> Task Management System</small>
             </h1>
+            <input style="margin-bottom: 1em; width: 25%" class="form-control pull-right" id="myInput" type="text" placeholder="Search..">
         </section>
 
         <!-- Main content -->
@@ -247,7 +248,7 @@ desired effect
                     <div class="box">
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table class="table table-bordered table-hover">
+                            <table id="myTable" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>First Name</th>
@@ -256,6 +257,7 @@ desired effect
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Location</th>
+                                    <th>Roles</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -268,6 +270,11 @@ desired effect
                                         <td>${user.email}</td>
                                         <td>${user.phone}</td>
                                         <td>${user.location}</td>
+                                        <td> 
+                                             <c:forEach items="${user.userRoleList}" var="role">
+                                                 <c:out value="${role.name}"/>
+                                             </c:forEach>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -281,7 +288,6 @@ desired effect
                 <div class="box-body">
 
                     <div id="usersBody" class="mybodybox">
-
 
                     </div>
                 </div>
@@ -398,5 +404,17 @@ desired effect
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

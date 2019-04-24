@@ -112,9 +112,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                                         <p>
                                             Welcome, ${currentUser.firstname} ${currentUser.lastname}
-
+                                            
                                             <c:forEach items="${currentUserRoles}" var="role">
-                                                <small><c:out value="${role.name} here |"> </c:out> </small>
+                                                <c:out value="${role.name}"> </c:out>
                                             </c:forEach>
 
                                         </p>
@@ -167,7 +167,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="pull-left info">
                             <p>${currentUser.firstname}</p>
                             <!-- Status -->
-                            <!-- <a href="#"><i class="fa fa-circle text-success"></i> </a> -->
+                            <a href="#"><small class="fa fa-circle text-success">
+                                <c:forEach items="${currentUserRoles}" var="role">
+                                <c:out value="${role.name}"> </c:out>
+                            </c:forEach></small> </a>
                         </div>
                     </div>
 
@@ -217,8 +220,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <div class="sidebarsubItem ">
                                 <ul>
 
-                                    <li class="active" id="usersviewAllBar">View All Users</li>
-                                    <li id="userAddBar">+Add New Use</li>
+                                    <li class="active" id="usersviewAllBar">
+                                        <a href="<c:url value="users"/> ">View All Users</a></li>
+                                    <li id="userAddBar"><a href="<c:url value="adduser"/> ">+Add New User</a></li>
 
                                 </ul>
                             </div>
