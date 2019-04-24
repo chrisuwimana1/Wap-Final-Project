@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mac
-  Date: 2019-04-23
-  Time: 16:55
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%--
 Created by IntelliJ IDEA.
@@ -16,7 +8,7 @@ To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -26,7 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>All Users| Blue Group</title>
+    <title>Wap Project | Blue Group</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -42,7 +34,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
           apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="css/skin-blue.min.css">
     <link rel="stylesheet" href="css/dashboardpage.css">
-    <link rel="stylesheet" href="css/users.css">
     <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="css/Team.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -104,22 +95,20 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png"
-                                 class="user-image" alt="User Image">
+                            <img  src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">${currentUser.firstname}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png"
-                                     class="img-circle" alt="User Image">
+                                <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="img-circle" alt="User Image">
 
                                 <p>
                                     Welcome, ${currentUser.firstname} ${currentUser.lastname}
 
                                     <c:forEach items="${currentUserRoles}" var="role">
-                                        <small><c:out value="${role.name} here |"> </c:out></small>
+                                        <small><c:out value="${role.name} here |"> </c:out> </small>
                                     </c:forEach>
 
                                 </p>
@@ -167,15 +156,29 @@ desired effect
             <!-- Sidebar user panel (optional) -->
             <div id="profilebtn" class="user-panel">
                 <div class="pull-left image">
-                    <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png"
-                         class="img-circle" alt="User Image">
+                    <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-group-512.png" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>${currentUser.firstname}</p>
                     <!-- Status -->
-                    <!-- <a href="#"><i class="fa fa-circle text-success"></i> </a> -->
+                    <a href="#"><small class="fa fa-circle text-success">
+                        <c:forEach items="${currentUserRoles}" var="role">
+                            <c:out value="${role.name}"> </c:out>
+                        </c:forEach></small> </a>
                 </div>
             </div>
+
+            <!-- search form (Optional) -->
+            <!-- <form action="#" method="get" class="sidebar-form">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                  </span>
+              </div>
+            </form> -->
+            <!-- /.search form -->
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
@@ -242,9 +245,9 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Edit user ${editUser.firstname} ${editUser.lastname}
+                Welcome
                 </br>
-                <small> Task Management System</small>
+                <small> To our Task Management System</small>
             </h1>
         </section>
 
@@ -254,23 +257,45 @@ desired effect
             <!--------------------------
               | Your Page Content Here |
               -------------------------->
+            <div class="box-body">
+                <div id="taskBody" class="mybodybox">
+                    <%@ include file="Task.jsp" %>
+                </div>
+
+                <div id="teamBody " class="mybodybox active">
+
+                    <div class="teamlistTable table-responsive-md active" >
+
+                        <table id="table_id" class="display table table-striped">
+
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Team Id</th>
+                                <th>Team Name</th>
+                                <th>Team Description</th>
+                            </tr>
+                            </thead>
+                            <tbody >
+                            <c:forEach items="${teams}" var="team">
+                                <tr id="${team.id}" class="teamListTableItem">
+                                   <td>${team.id}</td>
+                                    <td>${team.name}</td>
+                                    <td>${team.description}</td>
+                                </tr>
+                            </c:forEach>
+
+                            </tbody>
 
 
-            <h1>Please confirm delete</h1>
-            <h2 style="color: red">${delUser.firstname} ${delUser.lastname}</h2>
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="box box-primary">
-                    <!-- /.box-header -->
-                    <!-- form start -->
-                    <form role="form" action="delete" method="post">
-                        <!-- /.box-body -->
-                        <input type="hidden" name="id" value="${delUser.id}">
-                        <div class="box-footer">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </div>
-                    </form>
+                        </table>
 
+                    </div>
+
+                </div>
+
+                <div id="usersBody" class="mybodybox">
+
+                    <%@ include file="Users.jsp" %>
                 </div>
             </div>
         </section>
@@ -379,11 +404,17 @@ desired effect
 <!-- Page's css -->
 <script src="js/dashboardpage.js"></script>
 <script src="js/users.js"></script>
-<script src="js/task/add-task.js" type="text/javascript"></script>
+
 <script src="js/task/task-list.js" type="text/javascript"></script>
+
 <script src="js/team.js"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+
+<%--my view team page--%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="js/createTeam.js"></script>
 </body>
 </html>

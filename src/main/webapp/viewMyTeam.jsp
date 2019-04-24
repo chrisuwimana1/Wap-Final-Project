@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="js/createTeam.js"></script>
+    <script src="js/team.js"></script>
 
 </head>
 <body>
@@ -25,8 +27,9 @@
     <fieldset>
         <h2 class="fs-title">Flyer Team  Details</h2>
         <h3 class="fs-subtitle">This is step 1</h3>
-        <input type="text" name="name" value="Flyer Team" />
-        <textarea cols="20" rows="10" >This Team is for Vedic flying!!!</textarea>
+        <input id="addTeamNameInput" type="text" name="name" value="${team.name}" />
+        <input type="hidden" id="${team.id}" class="idOfMyTeam">
+        <textarea id="addTeamNameTextArea" cols="20" rows="10" >${team.description}</textarea>
         <input type="button" name="next" class="next action-button" value="Next" />
     </fieldset>
 
@@ -38,28 +41,33 @@
 
             <div id="teamallusers">
 
-                <p>Drag To Here</p>
+                <p color="red">Drag From Here</p>
                 <ul id="teamalluserlist" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                    <c:forEach var="dev" items="${developers}">
+
+                        <li draggable="true" id="${dev.id}" ondragstart="drag(event)">${dev.firstname} ${dev.lastname}</li>
+
+                    </c:forEach>
 
                 </ul>
 
             </div>
 
             <div id="teamnewmembers" >
-                <p>Drag From Here</p>
+                <p>Drag To Here</p>
                 <ul id="teamnewmemberlist" ondrop="drop(event)" ondragover="allowDrop(event)">
 
-                    <li draggable="true" id="1" ondragstart="drag(event)">Christophe Habin</li>
-                    <li draggable="true" id="2" ondragstart="drag(event)">Celestin Mbuyang</li>
-                    <li draggable="true" id="3" ondragstart="drag(event)">David Mmtbz</li>
-                    <li draggable="true" id="4" ondragstart="drag(event)">Christian</li>
+
+
+
                 </ul>
 
             </div>
         </div>
 
         <input type="button" name="previous" class="previous action-button" value="Previous" />
-        <input type="button" name="next" class="next action-button" value="Next" />
+        <input id="getSelectedUsersBtn" type="button" name="next" class="next action-button" value="Next" />
     </fieldset>
 
     <fieldset>
@@ -68,21 +76,22 @@
         <div id="teamconfcontainer">
 
 
-            <div class="teamconftitle"><b>Group Name:</b> <span>Group B</span></div>
-            <div class="teamconftitle"><b>Group Description:</b> <span>Group B</span></div>
-            <div class="teamconftitle"><b>Group Members:</b>
+            <div class="teamconftitle teamname"><b>Group Name:</b> <span></span></div>
+            <div class="teamconftitle teamdescr"><b>Group Description:</b> <span></span></div>
+            <div class="teamconftitle userList"><b>Group Members:</b>
                 <ul>
 
-                    <li >Celestin Mbuyang</li>
-                    <li >David Mmtbz</li>
-                    <li >Christian</li>
+<%--                    <li >Celestin Mbuyang</li>--%>
+<%--                    <li >David Mmtbz</li>--%>
+<%--                    <li >Christian</li>--%>
                 </ul>
 
             </div>
 
         </div>
         <input type="button" name="previous" class="previous action-button" value="Previous" />
-        <input type="submit" name="submit" class="submit action-button" value="Submit" />
+        <input id="viewTeamSubmitBtn" type="button" name="submit" class="submit action-button view" value="Submit" />
+        <a href="getTeam">Cancel</a>
     </fieldset>
 </form>
 

@@ -5,6 +5,7 @@ import task.model.ApplicationUser;
 import task.model.Team;
 import task.model.UserEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,25 +45,16 @@ public class TeamService {
     }
 
     //    Add one team member
-    public static void addTeamMember(List<ApplicationUser> members,Team team){
+    public static void addTeamMember(List<Integer> members,Team team){
         //check if it is a developer
 
-        if(members!=null) {
+        List<ApplicationUser> devList = new ArrayList<>();
 
-            List<ApplicationUser> developers = members.stream()
-                    .filter(m -> m.getUserRoleList().stream()
-                            .anyMatch(r -> r.getId() == UserEnum.DEVELOPER.getUserRole()))
-                    .filter(m -> m.getTeamId() == null)
-                    .collect(Collectors.toList());
-
-
-            for (ApplicationUser developer : developers) {
-
-                developer.setTeamId(team);
-                new TaskMngtDao<ApplicationUser>().edit(developer);
-
-            }
-        }
+        members.forEach(m->{
+          ApplicationUser dev =  new TaskMngtDao<ApplicationUser>().find(ApplicationUser.class,m);
+          dev.setTeamId(team);
+            new TaskMngtDao<ApplicationUser>().edit(dev);
+        });
 
     }
 
@@ -88,13 +80,15 @@ public class TeamService {
         new TaskMngtDao<ApplicationUser>().edit(member);
     }
 
-    public  static void removeTeamMember(List<ApplicationUser> members,Team team){
+    public  static void removeTeamMember(List<Integer> members){
 
-        for(ApplicationUser member:members){
-            team.getApplicationUserList().remove(member);
-            member.setTeamId(null);
-            new TaskMngtDao<ApplicationUser>().edit(member);
-        }
+      members.forEach(m->{
+          ApplicationUser dev =  new TaskMngtDao<ApplicationUser>().find(ApplicationUser.class,m);
+          dev.setTeamId(null);
+          new TaskMngtDao<ApplicationUser>().edit(dev);
+
+
+      });
 
     }
 
