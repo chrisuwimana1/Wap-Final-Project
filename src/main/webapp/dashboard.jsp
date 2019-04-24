@@ -197,9 +197,14 @@ desired effect
             <a href="#"><i class="fa fa-folder" ></i> <span>Teams</span></a>
             <div class="sidebarsubItem " >
               <ul>
-                <li class="active" id="teamviewAllBar">View All Teams</li>
-                <li id="teamvieMineBar">View My Team Details</li>
-                <li id="teamAddBar">+Add New Team</li>
+<%--                <li class="active" id="teamviewAllBar">View All Teams</li>--%>
+<%--                <li id="teamvieMineBar">View My Team Details</li>--%>
+<%--                <li id="teamAddBar">+Add New Team</li>--%>
+
+
+  <li ><a href="getTeam">View All Teams</a></li>
+  <li id="teamvieMineBar">View My Team Details</li>
+  <li><a href="addteam">+Add New Team</a></li>
                 
               </ul>
             </div>

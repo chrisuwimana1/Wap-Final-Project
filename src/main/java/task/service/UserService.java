@@ -29,7 +29,7 @@ public class UserService {
 
 	public static List<ApplicationUser> getUsersbyRole(UserEnum role){
 
-       String sql = "SELECT * FROM APPLICATION_USER ,USER_ROLE WHERE APPLICATION_USER.ID= USER_ROLE.APPLICATION_USER_ID and USER_ROLE.ROLE_TYPE="+role.getUserRole()+" and TEAM_ID is null";
+       String sql = "SELECT * FROM APPLICATION_USER ,USER_ROLE WHERE APPLICATION_USER.ID= USER_ROLE.APPLICATION_USER_ID and USER_ROLE.ROLE_TYPE="+role.getUserRole();
 
        return new TaskMngtDao<ApplicationUser>().executeNativeQuery(sql,ApplicationUser.class);
 

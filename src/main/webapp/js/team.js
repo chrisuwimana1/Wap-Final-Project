@@ -1,83 +1,229 @@
-$(function () {
+ $(function () {
+//
+//
+//    // $("#teamviewAllBar").click(function () {
+//    //      $(".teamlistTable").removeClass("active")
+//    //     $("#msform").removeClass("active")
+//    //
+//    //
+//    //     $.get("getTeam",{dataType:"application/json"})
+//    //         .done(function (data) {
+//    //              $("#teamListTableBody").empty();
+//    //
+//    //              for (let i = 0; i<data.length ;i++){
+//    //
+//    //                  $("#teamListTableBody").append(" <tr draggable='false' id='"+data[i].id+"' class=\"teamListTableItem\">\n" +
+//    //                      "            <td>"+data[i].id+"</td>\n" +
+//    //                      "            <td>"+data[i].name+"</td>\n" +
+//    //                      "            <td>"+data[i].description+"</td>\n" +
+//    //                      "        </tr>")
+//    //              }
+//    //
+//    //
+//    //
+//    //
+//    //         })
+//    //         .fail(function () {
+//    //             alert("failure")
+//    //         })
+//    //         .always(function () {
+//    //
+//    //             $(".teamlistTable").addClass("active")
+//    //         });
+//    // })
+//
+//
+//
+//     $("#teamAddBar").click(function () {
+//         $(".teamlistTable").removeClass("active")
+//
+//         $("#msform").addClass("active")
+//
+//         $("#goToTeamMemberSwitch").addClass("addnew")
+//
+//
+//
+//     })
+//
+//
+//     $("#goToTeamMemberSwitch.addnew").click(function () {
+//
+//         $.get("addteamservlet",{dataType: "application/json"})
+//             .done(function (data) {
+//
+//                 $("#teamalluserlist").empty()
+//                 for (let i =0; i<data.length;i++){
+//                     $("#teamalluserlist").append(" <li draggable=\"true\" id='"+data[i].id+"' ondragstart=\"drag(event)\">"+data[i].firstname+" "+data[i].lastname+"</li>")
+//                 }
+//
+//             })
+//             .fail(function () {
+//
+//             })
+//             .always(function () {
+//
+//             })
+//     })
+//
+
+//
+//
+//     $("#teamvieMineBar").click(function () {
+//
+//         $(".teamlistTable").removeClass("active")
+//
+//         $("#msform").addClass("active")
+//
+//         $("#goToTeamMemberSwitch").addClass("viewmyTeam")
+//
+//         // $.ajax("getTeam",{
+//         //     method:'POST',
+//         //     data:{
+//         //         teamId:2
+//         //     }
+//         // }).done(function (data) {
+//         //
+//         //     alert(data)
+//         //     $(".teamconftitle.teamname span").text(data[0].name)
+//         //     $(".teamconftitle.teamdescr span").text(data[0].description)
+//         //
+//         //
+//         //
+//         // })
+//         // .fail()
+//         //
+//         // .always()sidebarsubItem
+//
+//
+//
+//
+//     })
+//
+//     $("#goToTeamMemberSwitch.viewmyTeam").click(function () {
+//
+//         $.get("addteamservlet",{dataType: "application/json"})
+//             .done(function (data) {
+//
+//                 $("#teamalluserlist").empty()
+//                 for (let i =0; i<data.length;i++){
+//                     $("#teamalluserlist").append(" <li draggable=\"true\" id='"+data[i].id+"' ondragstart=\"drag(event)\">"+data[i].firstname+" "+data[i].lastname+"</li>")
+//                 }
+//
+//             })
+//             .fail(function () {
+//
+//             })
+//             .always(function () {
+//
+//             })
+//
+//     })
+//
+//
+//
+     
+     $(".teamListTableItem").click(function () {
+        let teamId = $(this).attr("id")
+         window.location = "getTeam?teamId="+teamId;
 
 
-   $("#teamviewAllBar").click(function () {
-        $(".teamlistTable").removeClass("active")
-       $("#msform").removeClass("active")
+     })
+
+     $("#getSelectedUsersBtn").click(function () {
+
+        console.log("please")
+
+         $(".teamconftitle.userList ul").empty();
+         $(".teamconftitle.userList ul").append($("#teamnewmemberlist").children())
 
 
-       $.get("getTeam",{dataType:"application/json"})
-           .done(function (data) {
-                $("#teamListTableBody").empty();
-
-                for (let i = 0; i<data.length ;i++){
-
-                    $("#teamListTableBody").append(" <tr id='"+data[i].id+"' class=\"teamListTableItem\">\n" +
-                        "            <td>"+data[i].id+"</td>\n" +
-                        "            <td>"+data[i].name+"</td>\n" +
-                        "            <td>"+data[i].description+"</td>\n" +
-                        "        </tr>")
-                }
+         $(".teamconftitle.teamname span").text("");
+         $(".teamconftitle.teamname span").text($("#addTeamNameInput").val());
 
 
+         $(".teamconftitle.teamdescr span").text("");
+         $(".teamconftitle.teamdescr span").text($("#addTeamNameTextArea").val());
+     })
 
 
-           })
-           .fail(function () {
-               alert("failure")
-           })
-           .always(function () {
-
-               $(".teamlistTable").addClass("active")
-           });
-   })
+     $("#createTeamSubmitBtn").click(function(){
 
 
+    alert("ohhh please")
 
-    $("#teamAddBar").click(function () {
-        $(".teamlistTable").removeClass("active")
+             var teamName =  $(".teamconftitle.teamname span").text();
+             var teamDescr =  $(".teamconftitle.teamdescr span").text();
+             var teamMember = getTeamList($(".teamconftitle.userList ul"))
 
-        $("#msform").addClass("active")
+             if (teamMember==null || teamMember.length==0){
+                 alert("Can't create a team without Members")
+                 window.location.reload();
+             }
 
+             alert(teamMember.toString())
 
-        
-    })
+             $.ajax("addteam",{
 
+                 method:'POST',
+                 data:{
+                     name:teamName,
+                     description:teamDescr,
+                     members:teamMember.toString()
+                 }
+                      }).done(function (data) {
 
-    $("#goToTeamMemberSwitch").click(function () {
+                          alert("okay")
+                 window.location="getTeam"
+                      })
+                        .fail(function () {
+                            alert("fail")
+                        })
+                        .always(function () {
 
-        $.get("addservlet",{dataType: "application/json"})
-            .done(function (data) {
-
-                $("#teamalluserlist").empty()
-                for (let i =0; i<data.length;i++){
-                    $("#teamalluserlist").append(" <li draggable=\"true\" id='"+data[i].id+"' ondragstart=\"drag(event)\">"+data[i].firstname+" "+data[i].lastname+"</li>")
-                }
-
-            })
-            .fail(function () {
-
-            })
-            .always(function () {
-
-            })
-    })
-
-    $("#getSelectedUsersBtn").click(function () {
-
-
-        $(".teamconftitle.userList ul").empty();
-        $(".teamconftitle.userList ul").append($("#teamnewmemberlist").children())
+                            alert("success")
+                        })
 
 
-        $(".teamconftitle.teamname span").text("");
-        $(".teamconftitle.teamname span").text($("#addTeamNameInput").val());
+     })
+
+     $("#viewTeamSubmitBtn").click(function(){
 
 
-        $(".teamconftitle.teamdescr span").text("");
-        $(".teamconftitle.teamdescr span").text($("#addTeamNameTextArea").val());
-    })
+         alert("ohhh please noooooooo")
+
+         var teamName =  $(".teamconftitle.teamname span").text();
+         var teamDescr =  $(".teamconftitle.teamdescr span").text();
+         var teamMember = getTeamList($(".teamconftitle.userList ul"))
+         var teamId  = $(".idOfMyTeam").attr("id");
+
+         alert(teamId)
+
+         $.ajax("editteam",{
+
+             method:'POST',
+             data:{
+                 name:teamName,
+                 description:teamDescr,
+                 members:teamMember.toString(),
+                 teamId:teamId
+             }
+                  }).done(function (data) {
+
+                      alert("okay")
+             window.location="getTeam"
+                  })
+                    .fail(function () {
+
+                        alert("fail")
+                    })
+                    .always(function () {
+
+                    })
+
+
+     })
 
 
 
-})
+
+ })

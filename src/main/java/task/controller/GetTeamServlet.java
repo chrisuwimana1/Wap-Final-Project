@@ -2,8 +2,12 @@ package task.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import task.dao.TaskMngtDao;
+import task.model.ApplicationUser;
 import task.model.Team;
+import task.model.UserEnum;
 import task.service.TeamService;
+import task.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,34 +26,76 @@ public class GetTeamServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         if(req.getParameter("teamId")==null){
 
             List<Team> teamList = TeamService.getTeamList();
-            List<Map> myTeams = new ArrayList<>();
+            req.setAttribute("teams",teamList);
 
-            teamList.forEach(t->{
-                Map<String,Object> map = new HashMap<>();
-                map.put("id",t.getId());
-                map.put("name",t.getName());
-                map.put("description",t.getDescription());
-                myTeams.add(map);
-            });
+            req.getRequestDispatcher("viewTeamList.jsp").forward(req,resp);
 
-            ObjectMapper mapper = new ObjectMapper();
-            String newJsonData = mapper.writeValueAsString(myTeams);
-
-            resp.setContentType("application/json");
-            PrintWriter out = resp.getWriter();
-            out.print(newJsonData);
-            out.close();
 
         }else{
             int teamId = Integer.parseInt(req.getParameter("teamId"));
+
+            Team team = TeamService.getTeambyId(teamId);
+
+
+            List<ApplicationUser> developers = UserService.getUsersbyRole(UserEnum.DEVELOPER);
+
+            List<ApplicationUser> devs = new ArrayList<>();
+
+            if(!developers.isEmpty()) {
+
+                for (ApplicationUser dev : developers) {
+
+                    if (dev.getTeamId() != null) {
+                        if (dev.getTeamId().getId() == team.getId()) {
+                            devs.add(dev);
+                        }
+                    }
+
+                }
+            }
+             req.setAttribute("team",team);
+            if(devs.size() == 0)
+                System.out.println("is zero ............");
+
+            System.out.println(devs.toString()+" .f.....................");
+             req.setAttribute("developers", devs);
+
+
+             req.getRequestDispatcher("viewMyTeam.jsp").forward(req,resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req,resp);
+
+        if(req.getParameter("teamId")!=null){
+
+
+        int id = Integer.parseInt(req.getParameter("teamId"));
+
+        Team team = TeamService.getTeambyId(id);
+        Map<String,Object> myT = new HashMap<>();
+        myT.put("id", team.getId());
+        myT.put("name",team.getName());
+        myT.put("description",team.getDescription());
+
+        List<Map> myteamList = new ArrayList<>();
+        myteamList.add(myT);
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        String newJsonData = mapper.writeValueAsString(myteamList);
+
+        resp.setContentType("application/json");
+        PrintWriter out = resp.getWriter();
+        out.print(newJsonData);
+        out.close();
+
+        }
+
     }
 }
