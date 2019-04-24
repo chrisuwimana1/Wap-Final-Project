@@ -4,6 +4,10 @@
     /*background: skyblue;*/
 }
 
+.error-message{
+    color: red;
+}
+
 /* Modal Header */
 .task-modal-header {
     padding: 2px 16px;

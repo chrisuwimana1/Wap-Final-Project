@@ -4,10 +4,10 @@
     font-weight: bold;
 }
 .sidebarsubItem{
- display:none;
- font-size: 14px;
- font-weight: 150;
- color:orange;
+    display:none;
+    font-size: 14px;
+    font-weight: 150;
+    color:orange;
 }
 
 .sidebarsubItem.active{
@@ -30,7 +30,7 @@
 .sidebarsubItem ul li.active{
     color:chocolate;
     font-weight: bold;
-    
+
 }
 
 .mybodybox{
@@ -39,5 +39,8 @@
 }
 
 .mybodybox.active{
-    display:block;
+    display: block;
+  
+    font-size: 12px;
+    text-align: left;
 }
