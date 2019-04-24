@@ -47,6 +47,10 @@ public class TaskService {
         System.out.println("Task deleted: " + task);
         new TaskMngtDao<>().remove(task);
     }
+    
+    public static Task getTask(Integer taskId) {
+        return new TaskMngtDao<Task>().find(Task.class, taskId);
+    }
 
     public static List<Task> getAllTasks() {
         return new TaskMngtDao<Task>().findAll(Task.class);

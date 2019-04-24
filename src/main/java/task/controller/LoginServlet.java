@@ -14,7 +14,6 @@ import task.model.UserRole;
 import task.model.ApplicationUser;
 import task.service.LoginService;
 
-@WebServlet("/dashboard")
 public class LoginServlet extends HttpServlet {
 
     static String DASHBOARD_PAGE_PATH = "/dashboard.jsp";
