@@ -36,8 +36,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link rel="stylesheet" href="css/dashboardpage.css">
         <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
-
-
         <link rel="stylesheet" type="text/css" href="css/Team.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -380,7 +378,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
 
                         <div id="usersBody" class="mybodybox">
-
                             <%@ include file="Users.jsp" %>
                         </div>
                     </div>
@@ -564,6 +561,7 @@ immediately after the control sidebar -->
 <!-- REQUIRED JS SCRIPTS -->
 <!-- jQuery 3 -->
 <script src="js/jquery.min.js"></script>
+<script src="js/scripts/jquery-3.3.1.js" type="text/javascript"></script>
 <script src="js/scripts/dataTables.responsive.min.js" type="text/javascript"></script>
 <script src="js/scripts/jquery.dataTables.min.js" type="text/javascript"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -572,7 +570,7 @@ immediately after the control sidebar -->
 <script src="js/adminlte.min.js"></script>
 <!-- Page's css -->
 <script src="js/dashboardpage.js"></script>
-<script src="js/users.js"></script>
+<!--<script src="js/users.js"></script>-->
 
 <script src="js/task/task-list.js" type="text/javascript"></script>
 
@@ -582,7 +580,6 @@ immediately after the control sidebar -->
      user experience. -->
 
 <%--my view team page--%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="js/createTeam.js"></script>
 </body>
