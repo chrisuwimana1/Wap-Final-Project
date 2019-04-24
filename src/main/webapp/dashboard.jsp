@@ -112,7 +112,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                                         <p>
                                             Welcome, ${currentUser.firstname} ${currentUser.lastname}
-                                            
+
                                             <c:forEach items="${currentUserRoles}" var="role">
                                                 <c:out value="${role.name}"> </c:out>
                                             </c:forEach>
