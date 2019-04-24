@@ -21,7 +21,7 @@ public class UserService {
 		return users;
 	}
 	
-	public void updateUser(ApplicationUser user) {
+	public static void updateUser(ApplicationUser user) {
 		TaskMngtDao<ApplicationUser> useDao = new TaskMngtDao<>();
 		useDao.edit(user);
 		// .....
@@ -33,6 +33,25 @@ public class UserService {
 
        return new TaskMngtDao<ApplicationUser>().executeNativeQuery(sql,ApplicationUser.class);
 
+	}
+
+
+	public static boolean addUser(ApplicationUser user){
+		new TaskMngtDao<ApplicationUser>().create(user);
+
+		return true;
+	}
+
+
+	public static ApplicationUser getUserById(Integer id){
+		return (ApplicationUser) new TaskMngtDao<ApplicationUser>().find(ApplicationUser.class, id);
+	}
+
+	public static void deleteUserById(Integer id){
+
+		ApplicationUser user = UserService.getUserById(id);
+
+		new TaskMngtDao<ApplicationUser>().remove(user);
 	}
 
 }

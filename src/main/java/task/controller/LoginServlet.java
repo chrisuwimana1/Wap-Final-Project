@@ -1,6 +1,7 @@
 package task.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import task.model.UserRole;
 import task.model.ApplicationUser;
 import task.service.LoginService;
 
+@WebServlet("/dashboard")
 public class LoginServlet extends HttpServlet {
 
     static String DASHBOARD_PAGE_PATH = "/dashboard.jsp";
@@ -31,6 +33,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("uname");
         String password = req.getParameter("psw");
+        String error;
 
 
         // System.out.println(username + "............" );
@@ -44,17 +47,31 @@ public class LoginServlet extends HttpServlet {
 
             System.out.println("list ..."+currentUserRoles);
 
-            currentUserRoles.forEach( x-> System.out.println("role "+ x.toString()));
+
+            List<String> roles = new ArrayList<>();
+            currentUserRoles.forEach( x-> {
+                if(x.getRoleType() == 1  )
+                    roles.add("Admin");
+                if(x.getRoleType() == 2)
+                    roles.add("Project Manager");
+                if(x.getRoleType() == 3)
+                    roles.add("Developer");
+            });
 
             HttpSession session = req.getSession();
 
-            session.setAttribute("currentUser", currentUser);
-            // session.setAttribute("currentUserRoles", currentUserRoles);
 
+            // roles.forEach( x -> System.out.println(x +" ..."));
+            session.setAttribute("currentUser", currentUser);
+
+            session.setAttribute("currentUserRoles", currentUserRoles);
             req.getRequestDispatcher("/dashboard.jsp").forward(req,resp);
             // System.out.print(currentUser.toString());
         } else {
-            req.getRequestDispatcher("/login.jsp").forward(req,resp);
+            // stay to login page
+            error = "Incorrect username or password";
+            req.setAttribute("loginError", error);
+            resp.sendRedirect(req.getContextPath());
         }
     }
 }
