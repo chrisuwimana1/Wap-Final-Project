@@ -54,7 +54,7 @@ $(document).ready(
                     team : team
                 }
             }).done(function () {
-                alert("done");
+//                alert("done");
             }).fail(function () {
                 alert("fail");
             });
