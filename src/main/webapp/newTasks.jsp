@@ -52,6 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/task/task.css" rel="stylesheet" type="text/css"/>
     </head>
     <!--
     BODY TAG OPTIONS:
@@ -112,9 +113,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                                         <p>
                                             Welcome, ${currentUser.firstname} ${currentUser.lastname}
-                                            
+
                                             <c:forEach items="${currentUserRoles}" var="role">
-                                                <c:out value="${role.name}"> </c:out>
+                                                <small><c:out value="${role.name} here |"> </c:out> </small>
                                             </c:forEach>
 
                                         </p>
@@ -167,10 +168,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="pull-left info">
                             <p>${currentUser.firstname}</p>
                             <!-- Status -->
-                            <a href="#"><small class="fa fa-circle text-success">
-                                <c:forEach items="${currentUserRoles}" var="role">
-                                <c:out value="${role.name}"> </c:out>
-                            </c:forEach></small> </a>
+                            <!-- <a href="#"><i class="fa fa-circle text-success"></i> </a> -->
                         </div>
                     </div>
 
@@ -220,9 +218,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <div class="sidebarsubItem ">
                                 <ul>
 
-                                    <li class="active" id="usersviewAllBar">
-                                        <a href="<c:url value="users"/> ">View All Users</a></li>
-                                    <li id="userAddBar"><a href="<c:url value="adduser"/> ">+Add New User</a></li>
+                                    <li class="active" id="usersviewAllBar">View All Users</li>
+                                    <li id="userAddBar">+Add New Use</li>
 
                                 </ul>
                             </div>
@@ -252,8 +249,116 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     | Your Page Content Here |
                     -------------------------->
                     <div class="box-body">
-                        <div id="taskBody" class="mybodybox">
-                            <%@ include file="Task.jsp" %>
+                        <div id="taskBody" class="mybodybox active">
+                            <div id = "">
+                                <input style="width: 25%" class="" id="byOwner"  type="text" placeholder="Owner..">
+                                <input style="width: 25%" class="" id="byPriority" type="text" placeholder="Priority...">
+
+                                <input style="width: 25%" class="" id="byTeam"  type="text" placeholder="Team..">
+                                <table id="myTable" class="table  table-responsive table-striped task-list-table">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>Task name</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Priority</th>
+                                            <th>Team</th>
+                                            <th>Owner</th>
+                                            <th>Due Date</th>
+                                            <th>Overdue</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${tasks}" var="task">
+                                            <tr id="${task.id}" class="tskLstItm">
+                                                <td>${task.id}</td>
+                                                <td>${task.name}</td>
+                                                <td>${task.categoryName}</td>
+                                                <td>${task.status}</td>
+                                                <td>${task.priority}</td>
+                                                <td>${task.team}</td>
+                                                <td>${task.taskOwnerName}</td>
+                                                <td>${task.dueDate}</td>
+                                                <td>${task.overDue}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+
+                                <button id="new-task" ${PMDisabled}>New Task</button>
+
+                                <div id="myModal" class="task-modal">
+                                    <!-- Modal content -->
+                                    <div class="task-modal-content">
+                                        <div class="task-modal-header">
+                                            <h4 id="taskform-title"></h4>
+                                            <span id="task-close" class="task-close">&times;</span></span>
+                                        </div> 
+                                        <div class="task-modal-body">
+                                            <p>
+                                                <label for="taskname">Task Name *: </label><span class="error-message" id="taskname-error"></span>
+                                                <input class="form-control" id="taskname" type="text" placeholder="Enter Task name" name="taskname" ${PMDisabled}>
+                                                <input id="taskId" type="hidden" name="taskId">
+                                                <input id="rowId" type="hidden" name="rowId">
+                                                <input id="creationDate" type="hidden" name="creationDate">
+                                            </p>
+                                            <p>
+                                                <label for="description">Description: </label>
+                                                <textarea class="form-control" id="description" rows="2" cols="50" ${PMDisabled}></textarea>
+                                            </p>
+                                            <p>
+                                                <label for="category">Category *: </label><span class="error-message" id="category-error"></span>
+                                                <select class="form-control" id="category" ${PMDisabled}>
+                                                    <option value=""></option>
+                                                    <c:forEach var="category" items="${categories}">
+                                                        <option value="${category.id}">${category.name}</option>
+                                                    </c:forEach>   
+                                                </select>
+                                            </p>
+                                            <p>
+                                                <label for="taskowner">Task Owner *: </label><span class="error-message" id="taskowner-error"></span>
+                                                <select class="form-control" id="taskowner" ${PMDisabled}>
+                                                    <option value=""></option>
+                                                    <c:forEach var="dev" items="${devs}">
+                                                        <option value="${dev.id}">${dev.firstname} ${dev.lastname}</option>
+                                                    </c:forEach>                   
+                                                </select>
+                                            </p>
+                                            <p>
+                                                <label for="priority">Task Priority *: </label><span class="error-message" id="priority-error"></span>
+                                                <select class="form-control" id="priority" ${PMDisabled}>
+                                                    <option value=""></option>
+                                                    <option value="1">Low</option>
+                                                    <option value="2">Medium</option>
+                                                    <option value="3">High</option>                    
+                                                </select>
+                                            </p>
+                                            <p style="display: none">
+                                                <label for="duedate">Due Date *: </label>
+                                                <input class="form-control" id ="duedate" type="date" name="dueDate">
+                                            </p>
+                                            <p id="statusP">
+                                                <label for="status" >Status *: </label><span class="error-message" id="status-error"></span>
+                                                <select class="form-control" id="status" ${PMDisabled}>
+                                                    <option value=""></option>
+                                                    <option value="0">Initialization</option>
+                                                    <option value="1">In progress</option>
+                                                    <option value="2">Completed</option>                    
+                                                </select>
+                                            </p>
+                                            <p>
+                                                <label for="numberOfDays">Number Of Days *: </label><span class="error-message" id="number-of-days-error"></span>
+                                                <input class="form-control" id ="numberOfDays" type="number" name="numberOfDays" ${PMDisabled}>
+                                            </p>
+                                        </div>
+                                        <div class="task-modal-footer">
+                                            <button id="create-task" ${PMDisabled}>Create</button> <button id="update-task" ${PMDisabled}>Update</button> <button id="delete-task" ${PMDisabled}>Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div id="teamBody" class="mybodybox">
@@ -272,15 +377,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.content-wrapper -->
 
             <!-- Main Footer -->
-            <footer class="main-footer">
-                <!-- To the right -->
-                <div class="pull-right hidden-xs">
-                    TASKME Application
-                </div>
-                <!-- Default to the left -->
-                <strong>Copyright &copy; 2019 <a href="#">Blue Group</a>.</strong> All rights reserved.
-            </footer>
-
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Create the tabs -->
@@ -360,95 +456,95 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
     </section>
     <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
+<!-- Main Footer -->
+<footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      TASKME Application
+        TASKME Application
     </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; 2019 <a href="#">Blue Group</a>.</strong> All rights reserved.
-  </footer>
+</footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane active" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:;">
-              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+        <!-- Home tab content -->
+        <div class="tab-pane active" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Recent Activity</h3>
+            <ul class="control-sidebar-menu">
+                <li>
+                    <a href="javascript:;">
+                        <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                        <div class="menu-info">
+                            <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
 
-                <p>Will be 23 on April 24th</p>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
+                            <p>Will be 23 on April 24th</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.control-sidebar-menu -->
 
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:;">
-              <h4 class="control-sidebar-subheading">
-                Custom Template Design
-                <span class="pull-right-container">
-                    <span class="label label-danger pull-right">70%</span>
-                  </span>
-              </h4>
+            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <ul class="control-sidebar-menu">
+                <li>
+                    <a href="javascript:;">
+                        <h4 class="control-sidebar-subheading">
+                            Custom Template Design
+                            <span class="pull-right-container">
+                                <span class="label label-danger pull-right">70%</span>
+                            </span>
+                        </h4>
 
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
+                        <div class="progress progress-xxs">
+                            <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.control-sidebar-menu -->
 
-      </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">General Settings</h3>
+        </div>
+        <!-- /.tab-pane -->
+        <!-- Stats tab content -->
+        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+        <!-- /.tab-pane -->
+        <!-- Settings tab content -->
+        <div class="tab-pane" id="control-sidebar-settings-tab">
+            <form method="post">
+                <h3 class="control-sidebar-heading">General Settings</h3>
 
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Report panel usage
-              <input type="checkbox" class="pull-right" checked>
-            </label>
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">
+                        Report panel usage
+                        <input type="checkbox" class="pull-right" checked>
+                    </label>
 
-            <p>
-              Some information about this general settings option
-            </p>
-          </div>
-          <!-- /.form-group -->
-        </form>
-      </div>
-      <!-- /.tab-pane -->
+                    <p>
+                        Some information about this general settings option
+                    </p>
+                </div>
+                <!-- /.form-group -->
+            </form>
+        </div>
+        <!-- /.tab-pane -->
     </div>
-  </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-  immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+</aside>
+<!-- /.control-sidebar -->
+<!-- Add the sidebar's background. This div must be placed
+immediately after the control sidebar -->
+<div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 

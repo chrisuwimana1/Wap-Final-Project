@@ -76,9 +76,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<button id="loginbtn" class="btn btn-danger btn-block"
 							type="submit">Login</button>
 					</form>
-					<p class="account1">
-						Dont have an account? <a href="#">Register here</a>
-					</p>
 				</div>
 			</div>
 			<!-- //main content -->
