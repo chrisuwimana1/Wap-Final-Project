@@ -161,7 +161,10 @@ desired effect
                 <div class="pull-left info">
                     <p>${currentUser.firstname}</p>
                     <!-- Status -->
-                    <!-- <a href="#"><i class="fa fa-circle text-success"></i> </a> -->
+                    <a href="#"><small class="fa fa-circle text-success">
+                        <c:forEach items="${currentUserRoles}" var="role">
+                            <c:out value="${role.name}"> </c:out>
+                        </c:forEach></small> </a>
                 </div>
             </div>
 
@@ -181,47 +184,55 @@ desired effect
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">DASHBOARD</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li class=" sidebarItem" id="taskSideBarItem">
-                    <a href="#"><i class="fa fa-folder" ></i> <span>Tasks</span></a>
+                <li class="active sidebarItem" id="taskSideBarItem">
+                    <a href="#"><i class="fa fa-folder"></i> <span>Tasks</span></a>
                     <div class="sidebarsubItem ">
                         <ul>
-                            <li class="active" id="taskViewAllBar"> View All Tasks</li>
-                            <li id="taskViewMineBar" style="display: none">View My Task</li>
-                            <li id="taskAddBar" style="display: none">+Add New Tas</li>
+                            <li><a href="tasks"> View All Tasks</a></li>
 
                         </ul>
                     </div>
                 </li>
 
-                <li  class="active sidebarItem" id="teamSideBarItem">
-                    <a href="#"><i class="fa fa-folder" ></i> <span>Teams</span></a>
-                    <div class="sidebarsubItem active" >
-                        <ul>
-                            <%--                <li class="active" id="teamviewAllBar">View All Teams</li>--%>
-                            <%--                <li id="teamvieMineBar">View My Team Details</li>--%>
-                            <%--                <li id="teamAddBar">+Add New Team</li>--%>
+                <c:forEach items="${currentUserRoles}" var="role">
+                    <c:if test="${role.roleType eq 2}">
+
+                        <li class="active sidebarItem" id="teamSideBarItem">
+                            <a href="#"><i class="fa fa-folder"></i> <span>Teams</span></a>
+                            <div class="sidebarsubItem active">
+                                <ul>
+                                        <%--                <li class="active" id="teamviewAllBar">View All Teams</li>--%>
+                                        <%--                <li id="teamvieMineBar">View My Team Details</li>--%>
+                                        <%--                <li id="teamAddBar">+Add New Team</li>--%>
 
 
-                            <li ><a href="getTeam">View All Teams</a></li>
-                            <li id="teamvieMineBar">View My Team Details</li>
-                            <li><a href="addteam">+Add New Team</a></li>
+                                    <li><a href="getTeam">View All Teams</a></li>
+                                    <li><a href="addteam">+Add New Team</a></li>
 
-                        </ul>
-                    </div>
-                </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    </c:if>
+                </c:forEach>
 
 
-                <li class="sidebarItem" id="userSideBarItem">
-                    <a href="#"><i class="fa fa-folder" ></i> <span>Users</span></a>
-                    <div class="sidebarsubItem ">
-                        <ul>
+                <c:forEach items="${currentUserRoles}" var="role">
+                    <c:if test="${role.roleType eq 1}">
+                        <li class="sidebarItem" id="userSideBarItem">
+                            <a href="#"><i class="fa fa-folder"></i> <span>Users</span></a>
+                            <div class="sidebarsubItem ">
+                                <ul>
 
-                            <li class="active" id="usersviewAllBar">View All Users</li>
-                            <li id="userAddBar">+Add New Use</li>
+                                    <li>
+                                        <a href="<c:url value="users"/> ">View All Users</a></li>
+                                    <li><a href="<c:url value="adduser"/> ">+Add New User</a></li>
 
-                        </ul>
-                    </div>
-                </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </c:if>
+                </c:forEach>
 
             </ul>
             <!-- /.sidebar-menu -->
