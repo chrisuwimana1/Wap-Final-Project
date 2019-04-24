@@ -1,0 +1,30 @@
+.popup-overlay {
+    visibility:hidden;
+    position:absolute;
+    background:#ffffff;
+    border:3px solid #666666;
+    width:50%;
+    height:50%;
+    left:25%;
+}
+
+.popup-content {
+    visibility:hidden;
+}
+
+.popup-overlay.active{
+    visibility:visible;
+    text-align:center;
+}
+
+.popup-content.active {
+    visibility:visible;
+}
+
+#popup1 {
+    width: 50%;
+    background-color: #8aa4af;
+    text-align: center;
+    color: red;
+
+}
