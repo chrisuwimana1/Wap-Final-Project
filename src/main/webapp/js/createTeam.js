@@ -79,32 +79,10 @@ $(".previous").click(function(){
     });
 });
 
-$(".submit").click(function(){
+    $(".backtoHome").click(function () {
 
-    var teamName =  $(".teamconftitle.teamname span").text();
-    var teamDescr =  $(".teamconftitle.teamdescr span").text();
-    var teamMember = getTeamList($(".teamconftitle.userList ul"))
-
-    alert(teamMember.toString())
-
-    $.ajax("addservlet",{
-
-        method:'POST',
-        data:{
-            name:teamName,
-            description:teamDescr,
-            members:teamMember.toString()
-        }
-             }).done(function (data) {
-
-                 alert("okay")
-             })
-               .fail()
-               .always()
-
-
-
-})
+        window.location = "getTeam"
+    })
 
 
 

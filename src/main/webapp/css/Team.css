@@ -14,3 +14,8 @@ body{
 .teamlistTable.active{
     display: block;
 }
+
+.teamListTableItem{
+    cursor: pointer;
+}
+

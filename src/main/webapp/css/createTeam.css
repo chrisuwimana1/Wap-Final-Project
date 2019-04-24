@@ -4,20 +4,20 @@
 /*!*basic reset*!*/
 /** {margin: 0; padding: 0;}*/
 
-/*html {*/
-/*    height: 100%;*/
-/*    !*Image only BG fallback*!*/
+html {
+    height: 100%;
+    /*Image only BG fallback*/
 
-/*    !*background = gradient + imsformmage pattern combo*!*/
-/*    !*background:*!*/
-/*    !*        linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));*!*/
-/*    background: #eeeeee;*/
-/*}*/
+    /*background = gradient + imsformmage pattern combo*/
+    /*background:*/
+    /*        linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));*/
+    background: #eeeeee;
+}
 
-/*body {*/
-/*    font-family: montserrat, arial, verdana;*/
-/*}*/
-/*form styles*/
+body {
+    font-family: montserrat, arial, verdana;
+}
+form styles
 #msform {
     width: 80%;
     margin: 30px 10% auto 10%;
@@ -39,8 +39,9 @@
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
     padding: 20px 30px;
     box-sizing: border-box;
-    width: 80%;
-    margin: 0 10%;
+    width: 60%;
+    margin: 0 20% 0 20%;
+    text-align: center;
 
 
 
